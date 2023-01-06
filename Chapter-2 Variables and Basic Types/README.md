@@ -21,6 +21,7 @@
 字符型分为`char`、`signed char`和`unsigned char`三种，但是表现形式只有带符号和无符号两种。类型`char`和`signed char`并不一样， `char`的具体形式由编译器（compiler）决定。
 
 如何选择算数类型：
+
 - 当明确知晓数值不可能为负时，应该使用无符号类型。
 
 - 使用`int`执行整数运算，如果数值超过了`int`的表示范围，应该使用`long long`类型。
@@ -34,10 +35,15 @@
 进行类型转换时，类型所能表示的值的范围决定了转换的过程。
 
 - 把非布尔类型的算术值赋给布尔类型时，初始值为0则结果为`false`，否则结果为`true`。
+
 - 把布尔值赋给非布尔类型时，初始值为`false`则结果为0，初始值为`true`则结果为1。
+
 - 把浮点数赋给整数类型时，进行近似处理，结果值仅保留浮点数中的整数部分。
+
 - 把整数值赋给浮点类型时，小数部分记为0。如果该整数所占的空间超过了浮点类型的容量，精度可能有损失。
+
 - 赋给无符号类型一个超出它表示范围的值时，结果是初始值对无符号类型表示数值总数（8比特大小的`unsigned char`能表示的数值总数是256）取模后的余数。
+
 - 赋给带符号类型一个超出它表示范围的值时，结果是未定义的（undefined）。
 
 避免无法预知和依赖于实现环境的行为。
@@ -50,7 +56,7 @@ for (unsigned u = 10; u >= 0; --u)
     std::cout << u << std::endl;
 ```
 
-当*u*等于0时，*--u*的结果将会是4294967295。一种解决办法是用`while`语句来代替`for`语句，前者可以在输出变量前先减去1。
+当`u`等于0时，`--u`的结果将会是4294967295。一种解决办法是用`while`语句来代替`for`语句，前者可以在输出变量前先减去1。
 
 ```c++
 unsigned u = 11;    // start the loop one past the first element we want to print
@@ -201,7 +207,7 @@ int main()
 
 ### 引用（References）
 
-引用为对象起了另外一个名字，引用类型引用（refers to）另外一种类型。通过将声明符写成`&d`的形式来定义引用类型，其中*d*是变量名称。
+引用为对象起了另外一个名字，引用类型引用（refers to）另外一种类型。通过将声明符写成`&d`的形式来定义引用类型，其中`d`是变量名称。
 
 ```c++
 int ival = 1024;
@@ -222,9 +228,10 @@ int &refVal2;       // error: a reference must be initialized
 与引用类似，指针也实现了对其他对象的间接访问。
 
 - 指针本身就是一个对象，允许对指针赋值和拷贝，而且在生命周期内它可以先后指向不同的对象。
+
 - 指针无须在定义时赋初值。和其他内置类型一样，在块作用域内定义的指针如果没有被初始化，也将拥有一个不确定的值。
 
-通过将声明符写成`*d`的形式来定义指针类型，其中*d*是变量名称。如果在一条语句中定义了多个指针变量，则每个量前都必须有符号`*`。
+通过将声明符写成`*d`的形式来定义指针类型，其中`d`是变量名称。如果在一条语句中定义了多个指针变量，则每个量前都必须有符号`*`。
 
 ```c++
 int *ip1, *ip2;     // both ip1 and ip2 are pointers to int
@@ -245,8 +252,11 @@ int *p = &ival; // p holds the address of ival; p is a pointer to ival
 指针的值（即地址）应属于下列状态之一：
 
 - 指向一个对象。
+
 - 指向紧邻对象所占空间的下一个位置。
+
 - 空指针，即指针没有指向任何对象。
+
 - 无效指针，即上述情况之外的其他值。
 
 试图拷贝或以其他方式访问无效指针的值都会引发错误。
@@ -265,7 +275,7 @@ cout << *p;     // * yields the object to which p points; prints 42
 
 空指针（null pointer）不指向任何对象，在试图使用一个指针前代码可以先检查它是否为空。得到空指针最直接的办法是用字面值`nullptr`来初始化指针。
 
-旧版本程序通常使用`NULL`（预处理变量，定义于头文件*cstdlib*中，值为0）给指针赋值，但在C++11中，最好使用`nullptr`初始化空指针。
+旧版本程序通常使用`NULL`（预处理变量，定义于头文件`cstdlib`中，值为0）给指针赋值，但在C++11中，最好使用`nullptr`初始化空指针。
 
 ```c++
 int *p1 = nullptr;  // equivalent to int *p1 = 0;
@@ -302,7 +312,7 @@ r = &i;         // r refers to a pointer; assigning &i to r makes p point to i
 
 面对一条比较复杂的指针或引用的声明语句时，从右向左阅读有助于弄清它的真实含义。
 
-## const限定符（Const Qualifier）
+## `const`限定符（`const` Qualifier）
 
 在变量类型前添加关键字`const`可以创建值不能被改变的对象。`const`变量必须被初始化。
 
@@ -326,7 +336,7 @@ bufSize = 512;      // error: attempt to write to const object
   extern const int bufSize;   // same bufSize as defined in file_1.cc
   ```
 
-### const的引用（References to const）
+### `const`的引用（References to `const`）
 
 把引用绑定在`const`对象上即为对常量的引用（reference to const）。对常量的引用不能被用作修改它所绑定的对象。
 
@@ -356,7 +366,7 @@ int &r2 = ci;   // error: non const reference to a const object
   const int &ri = dval;
   ```
 
-### 指针和const（Pointers and const）
+### 指针和`const`（Pointers and `const`）
 
 指向常量的指针（pointer to const）不能用于修改其所指向的对象。常量对象的地址只能使用指向常量的指针来存放，但是指向常量的指针可以指向一个非常量对象。
 
@@ -380,7 +390,7 @@ const double *const pip = &pi;  // pip is a const pointer to a const object
 
 指针本身是常量并不代表不能通过指针修改其所指向的对象的值，能否这样做完全依赖于其指向对象的类型。
 
-### 顶层const（Top-Level const）
+### 顶层`const`（Top-Level `const`）
 
 顶层`const`表示指针本身是个常量，底层`const`（low-level const）表示指针所指的对象是一个常量。指针类型既可以是顶层`const`也可以是底层`const`。
 
@@ -412,7 +422,7 @@ const int &r = ci;      // const in reference types is always low-level
   const int &r2 = i;  // ok: can bind const int& to plain int
   ```
 
-### constexpr和常量表达式（constexpr and Constant Expressions）
+### `constexpr`和常量表达式（`constexpr` and Constant Expressions）
 
 常量表达式（constant expressions）指值不会改变并且在编译过程就能得到计算结果的表达式。
 
@@ -466,7 +476,7 @@ C++11使用关键字`using`进行别名声明（alias declaration），作用是
 using SI = Sales_item; // SI is a synonym for Sales_item
 ```
 
-### auto类型说明符（The auto Type Specifier）
+### `auto`类型说明符（The `auto` Type Specifier）
 
 C++11新增`auto`类型说明符，能让编译器自动分析表达式所属的类型。`auto`定义的变量必须有初始值。
 
@@ -509,7 +519,7 @@ auto &h = 42;   // error: we can't bind a plain reference to a literal
 const auto &j = 42;     // ok: we can bind a const reference to a literal
 ```
 
-### decltype类型指示符（The decltype Type Specifier）
+### `decltype`类型指示符（The `decltype` Type Specifier）
 
 C++11新增`decltype`类型指示符，作用是选择并返回操作数的数据类型，此过程中编译器不实际计算表达式的值。
 
@@ -528,7 +538,7 @@ decltype(cj) z;     // error: z is a reference and must be initialized
 
 如果`decltype`使用的表达式不是一个变量，则`decltype`返回表达式结果对应的类型。如果表达式的内容是解引用操作，则`decltype`将得到引用类型。如果`decltype`使用的是一个不加括号的变量，则得到的结果就是该变量的类型；如果给变量加上了一层或多层括号，则`decltype`会得到引用类型，因为变量是一种可以作为赋值语句左值的特殊表达式。
 
-`decltype((var))`的结果永远是引用，而`decltype(var)`的结果只有当*var*本身是一个引用时才会是引用。
+`decltype((var))`的结果永远是引用，而`decltype(var)`的结果只有当`var`本身是一个引用时才会是引用。
 
 ## 自定义数据结构（Defining Our Own Data Structures）
 

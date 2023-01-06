@@ -29,11 +29,13 @@ int main()
 函数调用完成两项工作：
 
 - 用实参初始化对应的形参。
+
 - 将控制权从主调函数转移给被调函数。此时，主调函数（calling function）的执行被暂时中断，被调函数（called function）开始执行。
 
 `return`语句结束函数的执行过程，完成两项工作：
 
 - 返回`return`语句中的值（可能没有值）。
+
 - 将控制权从被调函数转移回主调函数，函数的返回值用于初始化调用表达式的结果。
 
 实参是形参的初始值，两者的顺序和类型必须一一对应。
@@ -74,7 +76,7 @@ int f4(int v1, int v2) { /* ... */ }  // ok
 
 ### 分离式编译（Separate Compilation）
 
-分离式编译允许我们把程序按照逻辑关系分割到几个文件中去，每个文件独立编译。这一过程通常会产生后缀名是*.obj*或*.o*的文件，该文件包含对象代码（object code）。之后编译器把对象文件链接（link）在一起形成可执行文件。
+分离式编译允许我们把程序按照逻辑关系分割到几个文件中去，每个文件独立编译。这一过程通常会产生后缀名是`.obj`或`.o`的文件，该文件包含对象代码（object code）。之后编译器把对象文件链接（link）在一起形成可执行文件。
 
 ## 参数传递（Argument Passing）
 
@@ -83,6 +85,7 @@ int f4(int v1, int v2) { /* ... */ }  // ok
 形参的类型决定了形参和实参交互的方式：
 
 - 当形参是引用类型时，它对应的实参被引用传递（passed by reference），函数被传引用调用（called by reference）。引用形参是它对应实参的别名。
+
 - 当形参不是引用类型时，形参和实参是两个相互独立的对象，实参的值会被拷贝给形参（值传递，passed by value），函数被传值调用（called by value）。
 
 ### 传值参数（Passing Arguments by Value）
@@ -122,7 +125,7 @@ void reset(int &i)  // i is just another name for the object passed to reset
 
 一个函数只能返回一个值，但利用引用形参可以使函数返回额外信息。
 
-### const形参和实参（const Parameters and Arguments）
+### `const`形参和实参（`const` Parameters and Arguments）
 
 当形参有顶层`const`时，传递给它常量对象或非常量对象都是可以的。
 
@@ -158,7 +161,7 @@ f(int &arr[10])     // error: declares arr as an array of references
 f(int (&arr)[10])   // ok: arr is a reference to an array of ten ints
 ```
 
-### main：处理命令行选项（main：Handling Command-Line Options）
+### `main`：处理命令行选项（`main`：Handling Command-Line Options）
 
 可以在命令行中向`main`函数传递参数，形式如下：
 
@@ -167,9 +170,9 @@ int main(int argc, char *argv[]) { /*...*/ }
 int main(int argc, char **argv) { /*...*/ }
 ```
 
-第二个形参*argv*是一个数组，数组元素是指向C风格字符串的指针；第一个形参*argc*表示数组中字符串的数量。
+第二个形参`argv`是一个数组，数组元素是指向C风格字符串的指针；第一个形参`argc`表示数组中字符串的数量。
 
-当实参传递给`main`函数后，*argv*的第一个元素指向程序的名字或者一个空字符串，接下来的元素依次传递命令行提供的实参。最后一个指针之后的元素值保证为0。
+当实参传递给`main`函数后，`argv`的第一个元素指向程序的名字或者一个空字符串，接下来的元素依次传递命令行提供的实参。最后一个指针之后的元素值保证为0。
 
 在*Visual Studio*中可以设置`main`函数调试参数：
 
@@ -194,7 +197,7 @@ C++11新标准提供了两种主要方法处理实参数量不定的函数。
 
 C++还可以使用省略符形参传递可变数量的实参，但这种功能一般只用在与C函数交换的接口程序中。
 
-`initializer_list`是一种标准库类型，定义在头文件*initializer_list*中，表示某种特定类型的值的数组。
+`initializer_list`是一种标准库类型，定义在头文件`initializer_list`中，表示某种特定类型的值的数组。
 
 `initializer_list`提供的操作：
 
@@ -219,7 +222,7 @@ else
 
 省略符形参应该仅仅用于C和C++通用的类型，大多数类类型的对象在传递给省略符形参时都无法正确拷贝。
 
-## 返回类型和return语句（Return Types and the return Statement）
+## 返回类型和`return`语句（Return Types and the `return` Statement）
 
 `return`语句有两种形式，作用是终止当前正在执行的函数并返回到调用该函数的地方。
 
@@ -234,7 +237,7 @@ return expression;
 
 通常情况下，如果`void`函数想在其中间位置提前退出，可以使用`return`语句。
 
-一个返回类型是`void`的函数也能使用`return`语句的第二种形式，不过此时`return`语句的*expression*必须是另一个返回`void`的函数。
+一个返回类型是`void`的函数也能使用`return`语句的第二种形式，不过此时`return`语句的`expression`必须是另一个返回`void`的函数。
 
 强行令`void`函数返回其他类型的表达式将产生编译错误。
 
@@ -291,7 +294,7 @@ C++11规定，函数可以返回用花括号包围的值的列表。同其他返
 
 `main`函数的返回值可以看作是状态指示器。返回0表示执行成功，返回其他值表示执行失败，其中非0值的具体含义依机器而定。
 
-为了使`main`函数的返回值与机器无关，头文件*cstdlib*定义了`EXIT_SUCCESS`和`EXIT_FAILURE`这两个预处理变量，分别表示执行成功和失败。
+为了使`main`函数的返回值与机器无关，头文件`cstdlib`定义了`EXIT_SUCCESS`和`EXIT_FAILURE`这两个预处理变量，分别表示执行成功和失败。
 
 ```c++
 int main()
@@ -333,7 +336,7 @@ int factorial(int val)
 Type (*function(parameter_list))[dimension]
 ```
 
-其中*Type*表示元素类型，*dimension*表示数组大小，*(\*function (parameter_list))*两端的括号必须存在。
+其中`Type`表示元素类型，`dimension`表示数组大小，`(*function(parameter_list))`两端的括号必须存在。
 
 C++11允许使用尾置返回类型（trailing return type）简化复杂函数声明。尾置返回类型跟在形参列表后面，并以一个`->`符号开头。为了表示函数真正的返回类型在形参列表之后，需要在本应出现返回类型的地方添加`auto`关键字。
 
@@ -406,7 +409,9 @@ string &shorterString(string &s1, string &s2)
 调用重载函数时有三种可能的结果：
 
 - 编译器找到一个与实参最佳匹配（best match）的函数，并生成调用该函数的代码。
+
 - 编译器找不到任何一个函数与实参匹配，发出无匹配（no match）的错误信息。
+
 - 有一个以上的函数与实参匹配，但每一个都不是明显的最佳选择，此时编译器发出二义性调用（ambiguous call）的错误信息。
 
 ### 重载与作用域（Overloading and Scope）

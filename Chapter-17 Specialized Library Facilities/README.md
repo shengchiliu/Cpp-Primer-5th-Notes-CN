@@ -1,12 +1,12 @@
 # 第17章 标准库特殊设施
 
-## tuple类型（The tuple Type）
+## `tuple`类型（The `tuple` Type）
 
-`tuple`是类似`pair`的模板，定义在头文件*tuple*中。与`pair`不同，`tuple`可以有任意数量的成员。如果希望将一些数据组合成单一对象，但又不想定义新数据结构时，可以使用`tuple`（“快速而随意”的数据结构）。
+`tuple`是类似`pair`的模板，定义在头文件`tuple`中。与`pair`不同，`tuple`可以有任意数量的成员。如果希望将一些数据组合成单一对象，但又不想定义新数据结构时，可以使用`tuple`（“快速而随意”的数据结构）。
 
 ![17-1](Images/17-1.png)
 
-### 定义和初始化tuple（Defining and Initializing tuples）
+### 定义和初始化`tuple`（Defining and Initializing `tuple`s）
 
 定义`tuple`时需要指定每个成员的类型。创建`tuple`对象时，可以使用`tuple`的默认构造函数，它会对每个成员进行值初始化。或者给每个成员提供初始值。包含初始值的构造函数是`explicit`的，因此必须使用直接初始化语法。
 
@@ -34,6 +34,7 @@ get<2>(item) *= 0.8;    // apply 20% discount
 可以使用`tuple_size`和`tuple_element`这两个辅助类模板查询`tuple`成员的数量和类型。
 
 - `tuple_size`通过一个`tuple`类型来初始化，它有一个名为`value`的静态公有数据成员，类型为`size_t`，表示给定`tuple`中成员的数量。
+
 - `tuple_element`通过一个索引值（整型常量）和一个`tuple`类型来初始化，它有一个名为`type`的公有数据成员，表示给定`tuple`中指定成员的类型。
 
 使用`decltype`可以确定一个对象的类型。
@@ -50,15 +51,15 @@ tuple_element<1, trans>::type cnt = get<1>(item);    // cnt is an int
 
 由于`tuple`定义了`<`和`==`运算符，因此`tuple`序列可以被传递给算法，无序容器的关键字也可以使用`tuple`类型。
 
-### 使用tuple返回多个值（Using a tuple to Return Multiple Values）
+### 使用`tuple`返回多个值（Using a `tuple` to Return Multiple Values）
 
 `tuple`的一个常见用途是从一个函数返回多个值。
 
-## bitset类型（The bitset Type）
+## `bitset`类型（The `bitset` Type）
 
-标准库在头文件*bitset*中定义了`bitset`类，用于处理二进制位。`bitset`可以处理超过最长整型类型大小的位集合。
+标准库在头文件`bitset`中定义了`bitset`类，用于处理二进制位。`bitset`可以处理超过最长整型类型大小的位集合。
 
-### 定义和初始化bitset（Defining and Initializing bitsets）
+### 定义和初始化`bitset`（Defining and Initializing `bitset`s）
 
 `bitset`类是一个模板，类似`array`，具有固定的大小。定义一个`bitset`时需要指明它包含的二进制位数。
 
@@ -86,7 +87,7 @@ bitset<32> bitvec6(str, str.size()-4);   // use last four characters
 
 ![17-3](Images/17-3.png)
 
-### bitset操作（Operations on bitsets）
+### `bitset`操作（Operations on `bitset`s）
 
 `bitset`操作：
 
@@ -104,15 +105,18 @@ cout << "ulong = " << ulong << endl;
 `bitset`的输入运算符从输入流读取字符，保存到临时的`string`对象中。遇到下列情况时停止读取：
 
 - 读取的字符数达到对应`bitset`的大小。
+
 - 遇到不是1和0的字符。
+
 - 遇到文件结尾。
+
 - 输入出现错误。
 
 读取结束后用临时`string`对象初始化`bitset`。如果读取的字符数小于`bitset`的大小，则`bitset`的高位被置为0。
 
 ## 正则表达式（Regular Expressions）
 
-正则表达式是一种描述字符序列的方法。C++11新标准增加了正则表达式库（RE库），定义在头文件*regex*中，包含多个组件。
+正则表达式是一种描述字符序列的方法。C++11新标准增加了正则表达式库，定义在头文件`regex`中，包含多个组件。
 
 ![17-5](Images/17-5.png)
 
@@ -153,11 +157,12 @@ if (regex_search(test_str, results, r))     // if there is a match
 RE库为不同的输入序列都定义了对应的类型。使用时RE库类型必须与输入类型匹配。
 
 - `regex`类保存`char`类型的正则表达式；`wregex`保存`wchar_t`类型的正则表达式。
+
 - `smatch`表示`string`类型的输入序列；`cmatch`表示字符数组类型的输入序列；`wsmatch`表示`wstring`类型的输入序列；`wcmatch`表示宽字符数组类型的输入序列。
 
 ![17-9](Images/17-9.png)
 
-### 匹配与Regex迭代器类型（The Match and Regex Iterator Types）
+### 匹配与`regex`迭代器类型（The Match and `regex` Iterator Types）
 
 `regex`迭代器是一种迭代器适配器，它被绑定到一个输入序列和一个`regex`对象上，每种输入类型都有对应的迭代器类型。
 
@@ -220,11 +225,17 @@ regex r("([[:alnum:]]+)\\.(cpp|cxx|cc)$", regex::icase);
 ECMAScript正则表达式语言的一些特性：
 
 - 模式`[[:alnum:]]`匹配任意字母。
+
 - 符号`+`表示匹配一个或多个字符。
+
 - 符号`*`表示匹配零个或多个字符。
+
 - `\{d}`表示单个数字，`\{d}{n}`表示一个n个数字的序列。
+
 - 在方括号中的字符集合表示匹配这些字符中的任意一个。
+
 - 后接`?`的组件是可选的。
+
 - 类似C++，ECMAScript使用反斜线进行转义。由于模式包含括号，而括号是ECMAScript中的特殊字符，因此需要用`\(`和`\)`来表示括号是模式的一部分。
 
 因为反斜线`\`是C++中的特殊字符，所以在模式中使用`\`时，需要一个额外的反斜线进行转义。
@@ -233,13 +244,13 @@ ECMAScript正则表达式语言的一些特性：
 
 ![17-14](Images/17-14.png)
 
-### 使用regex_replace（Using regex_replace）
+### 使用`regex_replace`（Using `regex_replace`）
 
 正则表达式替换操作：
 
 ![17-15](Images/17-15.png)
 
-标准库定义了用于在正则表达式替换过程中控制匹配或格式的标志。这些标志可以传递给`regex_search`、`regex_match`函数或者`smatch`类的`format`成员。匹配和格式化标志的类型为`match_flag_type`，定义在命名空间*regex_constants*中。由于*regex_constants*定义在*std*中，因此在使用这些名字时，需要同时加上两个命名空间的限定符。
+标准库定义了用于在正则表达式替换过程中控制匹配或格式的标志。这些标志可以传递给`regex_search`、`regex_match`函数或者`smatch`类的`format`成员。匹配和格式化标志的类型为`match_flag_type`，定义在命名空间`regex_constants`中。由于`regex_constants`定义在`std`中，因此在使用这些名字时，需要同时加上两个命名空间的限定符。
 
 ![17-16](Images/17-16.png)
 
@@ -256,7 +267,7 @@ cout << regex_replace(s, r, fmt2, format_no_copy) << endl;
 
 在新标准出现之前，C和C++都依赖于一个简单的C库函数`rand`来生成随机数。该函数生成均匀分布的伪随机整数，每个随机数的范围在0和一个系统相关的最大值（至少为32767）之间。
 
-头文件*random*中的随机数库定义了一组类来解决`rand`函数的一些问题：随机数引擎类（random-number engines）可以生成`unsigned`随机数序列；随机数分布类（random-number distribution classes）使用引擎类生成指定类型、范围和概率分布的随机数。
+头文件`random`中的随机数库定义了一组类来解决`rand`函数的一些问题：随机数引擎类（random-number engines）可以生成`unsigned`随机数序列；随机数分布类（random-number distribution classes）使用引擎类生成指定类型、范围和概率分布的随机数。
 
 ![17-17](Images/17-17.png)
 
@@ -323,6 +334,7 @@ vector<unsigned> good_randVec()
 为引擎设置种子有两种方式：
 
 - 在创建对象时提供种子。
+
 - 调用引擎的`seed`成员设置种子。
 
 ```c++
@@ -332,7 +344,7 @@ default_random_engine e3;    // uses the default seed value
 e3.seed(32767);     // call seed to set a new seed value
 ```
 
-选择种子的常用方法是调用系统函数`time`。该函数定义在头文件*ctime*中，返回从一个特定时刻到当前经过的秒数。`time`函数接受单个指针参数，指向用于写入时间的数据结构。如果指针为空，则函数简单地返回时间。
+选择种子的常用方法是调用系统函数`time`。该函数定义在头文件`ctime`中，返回从一个特定时刻到当前经过的秒数。`time`函数接受单个指针参数，指向用于写入时间的数据结构。如果指针为空，则函数简单地返回时间。
 
 ```c++
 default_random_engine e1(time(0));   // a somewhat random seed
@@ -421,7 +433,9 @@ decimal: 20 1024
 默认情况下，在输出数值时，没有可见的标识指出当前使用的进制模式。如果需要输出八进制或十六进制值，应该使用`showbase`操纵符。对流应用`showbase`后，在输出结果中会显示进制，显示模式和指定整型常量进制的规范相同。
 
 - 前导`0x`表示十六进制。
+
 - 前导`0`表示八进制。
+
 - 无前导字符表示十进制。
 
 还原格式时使用`noshowbase`操纵符。
@@ -461,7 +475,9 @@ printed in hexadecimal: 0X14 0X400
 浮点数的输出格式涉及三个方面：
 
 - 输出精度（即输出多少个数字）。
+
 - 十六进制、定点十进制或者科学记数法形式输出。
+
 - 没有小数部分的浮点值是否输出小数点。
 
 默认情况下，浮点值按六位数字精度输出；如果浮点值没有小数部分，则不输出小数点；根据浮点数的值选择输出为定点十进制或科学计数法形式：非常大或非常小的值输出为科学记数法形式，其他值输出为定点十进制形式。
@@ -471,9 +487,10 @@ printed in hexadecimal: 0X14 0X400
 调用IO对象的`precision`成员或者使用`setprecision`操纵符可以改变精度。
 
 - `precision`成员是重载的。一个版本接受一个`int`值，将精度设置为此值，并返回旧精度值。另一个版本不接受参数，直接返回当前精度值。
+
 - `setprecision`操纵符接受一个参数来设置精度。
 
-`setprecision`操纵符和其他接受参数的操纵符都定义在头文件*iomanip*中。
+`setprecision`操纵符和其他接受参数的操纵符都定义在头文件`iomanip`中。
 
 ```c++
 // cout.precision reports the current precision value
@@ -497,15 +514,18 @@ Precision: 12, Value: 1.41421356237
 Precision: 3, Value: 1.41
 ```
 
-定义在头文件*iostream*中的操纵符：
+定义在头文件`iostream`中的操纵符：
 
 ![17-20](Images/17-20.png)
 
 操纵符可以强制流使用科学记数法、定点十进制或十六进制形式输出浮点值。
 
 - `scientific`使用科学记数法表示浮点值。
+
 - `fixed`使用定点十进制表示浮点值。
+
 - `hexfloat`（新标准库）使用十六进制表示浮点值。
+
 - `defaultfloat`（新标准库）将流恢复到默认状态。
 
 除非程序需要控制浮点数的表示方式，否则最好由标准库来选择计数法。
@@ -541,9 +561,13 @@ cout << showpoint << 10.0    // prints 10.0000
 按列输出时，通常需要非常精细地控制数据格式。
 
 - `setw`指定下一个数字或字符串值的最小空间。
+
 - `left`表示左对齐输出。
+
 - `right`表示右对齐输出（默认格式）。
+
 - `internal`控制负数的符号位置，它左对齐符号，右对齐值，中间空间用空格填充。
+
 - `setfill`指定一个字符代替默认的空格进行补白。
 
 `setw`类似`endl`，不改变输出流的内部状态，只影响下一次输出的大小。
@@ -589,7 +613,7 @@ i: -#########16next col
 d: #####3.14159next col
 ```
 
-头文件*iomanip*中定义的操纵符：
+头文件`iomanip`中定义的操纵符：
 
 ![17-21](Images/17-21.png)
 
@@ -621,12 +645,14 @@ while (cin.get(ch))
 有时读取完一个字符后才发现目前无法处理该字符，希望将其放回流中。标准库提供了三种方法退回字符。
 
 - `peek`返回输入流中下一个字符的副本，但不会将其从流中删除。
+
 - `unget`使输入流向后移动，令最后读取的值回到流中。即使不知道最后从流中读取了什么值，也可以调用`unget`。
+
 - `putback`是特殊版本的`unget`，它退回从流中读取的最后一个值，但它接受一个参数，该参数必须与最后读取的值相同。
 
 一般情况下，在读取下一个值之前，标准库保证程序可以退回最多一个值。
 
-`peek`和无参数的`get`函数都以`int`类型从输入流返回字符。这些函数使用`int`的原因是可以返回文件尾标记。`char`范围中的每个值都表示一个真实字符，因此没有额外的值可以表示文件尾。返回`int`的函数先将要返回的字符转换为`unsigned char`，再将结果提升为`int`。因此即使字符集中有字符映射到负值，返回的`int`也是正值。而标准库使用负值表示文件尾，这样就能保证文件尾与任何合法字符的值都不相同。头文件*cstdio*定义了一个名为`EOF`的常量值，可以用它检测函数返回的值是否是文件尾。
+`peek`和无参数的`get`函数都以`int`类型从输入流返回字符。这些函数使用`int`的原因是可以返回文件尾标记。`char`范围中的每个值都表示一个真实字符，因此没有额外的值可以表示文件尾。返回`int`的函数先将要返回的字符转换为`unsigned char`，再将结果提升为`int`。因此即使字符集中有字符映射到负值，返回的`int`也是正值。而标准库使用负值表示文件尾，这样就能保证文件尾与任何合法字符的值都不相同。头文件`cstdio`定义了一个名为`EOF`的常量值，可以用它检测函数返回的值是否是文件尾。
 
 ```c++
 int ch;    // use an int, not a char to hold the return from get()
@@ -652,8 +678,10 @@ while ((ch = cin.get()) != EOF)
 
 `get`和`getline`函数接受相同的参数，它们的行为类似但不相同。两个函数都一直读取数据，直到遇到下列情况之一：
 
-- 已经读取了*size - 1*个字符。
+- 已经读取了`size - 1`个字符。
+
 - 遇到了文件尾（`EOF`）。
+
 - 遇到了分隔符。
 
 两个函数的区别在于处理分隔符的方式：`get`将分隔符留在输入流中作为下一个字符，而`getline`读取并丢弃分隔符。两个函数都不会将分隔符保存在结果数组中。
@@ -689,7 +717,9 @@ cin.ignore(numeric_limits<streamsize>::max(), '\n');
 从逻辑上考虑，`seek`和`tell`函数的使用范围如下：
 
 - 可以对`istream`、`ifstream`、`istringstream`类型使用`g`版本。
+
 - 可以对`ostream`、`ofstream`、`ostringstream`类型使用`p`版本。
+
 - 可以对`iostream`、`fstream`、`stringstream`类型使用`g`和`p`版本。
 
 一个流中只有一个标记——不存在独立的读标记和写标记。`fstream`和`stringstream`类型可以读写同一个流。在这些类型中，有单一的缓冲区用于保存读写的数据，同时标记也只有一个，表示缓冲区中的当前位置。标准库将两个版本的`seek`和`tell`函数都映射到这个标记。
@@ -707,6 +737,6 @@ seekg(offset, from);    // set the read marker offset distance from from
 seekp(offset, from);    // offset has type off_type
 ```
 
-参数*new_position*和*offset*的类型分别是`pos_type`和`off_type`，这两个类型都是机器相关的，定义在头文件*istream*和*ostream*中。`pos_type`表示文件位置，而`off_type`表示距离当前位置的偏移量，偏移量可以是正数也可以是负数。
+参数`new_position`和`offset`的类型分别是`pos_type`和`off_type`，这两个类型都是机器相关的，定义在头文件`istream`和`ostream`中。`pos_type`表示文件位置，而`off_type`表示距离当前位置的偏移量，偏移量可以是正数也可以是负数。
 
 `tellg`和`tellp`函数返回一个`pos_type`值，表示流的当前位置。

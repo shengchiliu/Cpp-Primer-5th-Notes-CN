@@ -2,17 +2,20 @@
 
 ## 控制内存分配（Controlling Memory Allocation）
 
-### 重载new和delete（Overloading new and delete）
+### 重载`new`和`delete`（Overloading `new` and `delete`）
 
 使用`new`表达式时，实际执行了三步操作：
 
 - `new`表达式调用名为`operator new`（或`operator new[]`）的标准库函数。该函数分配一块足够大、原始、未命名的内存空间以便存储特定类型的对象（或对象数组）。
+
 - 编译器调用对应的构造函数构造这些对象并初始化。
+
 - 对象被分配了空间并构造完成，返回指向该对象的指针。
 
 使用`delete`表达式时，实际执行了两步操作：
 
 - 对指针所指向的对象（或对象数组）执行对应的析构函数。
+
 - 编译器调用名为`operator delete`（或`operator delete[]`）的标准库函数释放内存空间。
 
 如果程序希望控制内存分配的过程，则需要定义自己的`operator new`和`operator delete`函数。编译器会用自定义版本替换标准库版本。
@@ -36,7 +39,7 @@ void *operator delete(void*, nothrow_t&) noexcept;
 void *operator delete[](void*, nothrow_t&) noexcept
 ```
 
-`nothrow_t`类型是定义在头文件*new*中的一个结构体，这个类型不包含任何成员。头文件*new*还定义了一个名为`nothrow`的`const`对象，用户可以通过这个对象请求`new`的非抛出版本。
+`nothrow_t`类型是定义在头文件`new`中的一个结构体，这个类型不包含任何成员。头文件`new`还定义了一个名为`nothrow`的`const`对象，用户可以通过这个对象请求`new`的非抛出版本。
 
 将`operator`函数定义为类的成员时，它们是隐式静态的，无须显式地声明`static`。因为`operator new`用在对象构造之前，`operator delete`用在对象销毁之后，所以它们必须是静态成员，而且不能操纵类的任何数据成员。
 
@@ -69,7 +72,7 @@ void operator delete(void *mem) noexcept
 }
 ```
 
-### 定位new表达式（Placement new Expressions）
+### 定位`new`表达式（Placement `new` Expressions）
 
 在C++的早期版本中，`allocator`类还不是标准库的一部分。如果程序想分开内存分配和初始化过程，需要直接调用`operator new`和`operator delete`函数。它们类似`allocator`类的`allocate`和`deallocate`成员，负责分配或释放内存空间，但不会构造或销毁对象。
 
@@ -82,7 +85,7 @@ new (place_address) type [size]
 new (place_address) type [size] { braced initializer list }
 ```
 
-其中*place_address*是一个指针。*initializers*是一个以逗号分隔的初始值列表（可能为空），该列表用于构造新分配的对象。
+其中`place_address`是一个指针。`initializers`是一个以逗号分隔的初始值列表（可能为空），该列表用于构造新分配的对象。
 
 当仅通过一个地址值调用定位`new`时，它会使用`operator new(size_t, void*)`函数（用户无法重载的版本）。该函数不分配任何内存，直接返回指针形参。然后由`new`表达式负责在指定的地址初始化对象。
 
@@ -95,11 +98,12 @@ new (place_address) type [size] { braced initializer list }
 运行时类型识别（RTTI）的功能由两个运算符实现：
 
 - `typeid`运算符，用于返回表达式的类型。
+
 - `dynamic_cast`运算符，用于将基类的指针或引用安全地转换为派生类的指针或引用。
 
 RTTI运算符适用于以下情况：想通过基类对象的指针或引用执行某个派生类操作，并且该操作不是虚函数。
 
-### dynamic_cast运算符（The dynamic_cast Operator）
+### `dynamic_cast`运算符（The `dynamic_cast` Operator）
 
 `dynamic_cast`运算符的形式如下：
 
@@ -109,11 +113,13 @@ dynamic_cast<type&>(e)
 dynamic_cast<type&&>(e)
 ```
 
-其中*type*是一个类类型，并且通常情况下该类型应该含有虚函数。在第一种形式中，*e*必须是一个有效指针；在第二种形式中，*e*必须是一个左值；在第三种形式中，*e*不能是左值。在所有形式中，*e*的类型必须符合以下条件之一：
+其中`type`是一个类类型，并且通常情况下该类型应该含有虚函数。在第一种形式中，`e`必须是一个有效指针；在第二种形式中，`e`必须是一个左值；在第三种形式中，`e`不能是左值。在所有形式中，`e`的类型必须符合以下条件之一：
 
-- *e*是*type*的公有派生类。
-- *e*是*type*的公有基类。
-- *e*和*type*类型相同。
+- `e`是`type`的公有派生类。
+
+- `e`是`type`的公有基类。
+
+- `e`和`type`类型相同。
 
 如果条件符合，则类型转换成功，否则转换失败。转换失败可能有两种结果：
 
@@ -130,7 +136,7 @@ dynamic_cast<type&&>(e)
   }
   ```
 
-- 如果`dynamic_cast`语句的转换目标是引用类型，则抛出`bad_cast`异常（定义在头文件*typeinfo*中）。
+- 如果`dynamic_cast`语句的转换目标是引用类型，则抛出`bad_cast`异常（定义在头文件`typeinfo`中）。
 
   ```c++
   void f(const Base &b)
@@ -151,9 +157,9 @@ dynamic_cast<type&&>(e)
 
 可以对一个空指针执行`dynamic_cast`，结果是所需类型的空指针。
 
-### typeid运算符（The typeid Operator）
+### `typeid`运算符（The `typeid` Operator）
 
-`typeid`表达式的形式是`typeid(e)`，其中*e*可以是任意表达式或类型名称。`typeid`的结果是一个指向常量对象的引用，该对象的类型是标准库`type_info`（定义在头文件*typeinfo*中）或`type_info`的公有派生类型。
+`typeid`表达式的形式是`typeid(e)`，其中`e`可以是任意表达式或类型名称。`typeid`的结果是一个指向常量对象的引用，该对象的类型是标准库`type_info`（定义在头文件`typeinfo`中）或`type_info`的公有派生类型。
 
 `typeid`可以作用于任何类型的表达式，其中的顶层`const`会被忽略。如果表达式是一个引用，则`typeid`返回该引用所指对象的类型。当`typeid`作用于数组或函数时，不会执行向指针的标准类型转换。
 
@@ -186,7 +192,7 @@ if (typeid(bp) == typeid(Derived))
 }
 ```
 
-只有当类型含有虚函数时，编译器才会对`typeid`的表达式求值以确定返回类型。对于`typeid(*p)`，如果指针*p*所指向的类型不包含虚函数，则*p*可以是一个无效指针。否则`*p`会在运行期间求值，此时*p*必须是一个有效指针。如果*p*是空指针，`typeid(*p)`会抛出`bad_typeid`异常。
+只有当类型含有虚函数时，编译器才会对`typeid`的表达式求值以确定返回类型。对于`typeid(*p)`，如果指针`p`所指向的类型不包含虚函数，则`p`可以是一个无效指针。否则`*p`会在运行期间求值，此时`p`必须是一个有效指针。如果`p`是空指针，`typeid(*p)`会抛出`bad_typeid`异常。
 
 ### 使用RTTI（Using RTTI）
 
@@ -241,9 +247,9 @@ bool Base::equal(const Base &rhs) const
 }
 ```
 
-### type_info类（The type_info Class）
+### `type_info`类（The `type_info` Class）
 
-`type_info`类的精确定义会根据编译器的不同而略有差异。但是C++规定`type_info`必须定义在头文件*typeinfo*中，并且至少提供以下操作：
+`type_info`类的精确定义会根据编译器的不同而略有差异。但是C++规定`type_info`必须定义在头文件`typeinfo`中，并且至少提供以下操作：
 
 ![19-1](Images/19-1.png)
 
@@ -321,8 +327,11 @@ enum class intTypes
 可以在任何需要常量表达式的地方使用枚举成员。如：
 
 - 定义枚举类型的`constexpr`变量。
+
 - 将枚举类型对象作为`switch`语句的表达式，而将枚举值作为`case`标签。
+
 - 将枚举类型作为非类型模板形参使用。
+
 - 在类的定义中初始化枚举类型的静态数据成员。
 
 初始化枚举对象或者给枚举对象赋值时，必须使用该类型的一个枚举成员或者该类型的另一个对象。即使某个整型值恰好与枚举成员的值相等，也不能用其初始化枚举对象。
@@ -366,7 +375,7 @@ enum class open_modes;    // scoped enums can use int by default
 
 ### 数据成员指针（Pointers to Data Members）
 
-声明成员指针时必须在`*`前添加`classname::`以表示当前定义的指针可以指向*classname*的成员。
+声明成员指针时必须在`*`前添加`classname::`以表示当前定义的指针可以指向`classname`的成员。
 
 ```c++
 class Screen
@@ -461,7 +470,7 @@ find_if(svec.begin(), svec.end(), fcn);
 
 定义一个`function`对象时，必须指定该对象所能表示的函数类型（即可调用对象的形式）。如果可调用对象是一个成员函数，则第一个形参必须表示该成员是在哪个对象上执行的。
 
-使用标准库功能`mem_fn`（定义在头文件*functional*中）可以让编译器推断成员的类型。和`function`一样，`mem_fn`可以从成员指针生成可调用对象。但`mem_fn`可以根据成员指针的类型推断可调用对象的类型，无须显式指定。
+使用标准库功能`mem_fn`（定义在头文件`functional`中）可以让编译器推断成员的类型。和`function`一样，`mem_fn`可以从成员指针生成可调用对象。但`mem_fn`可以根据成员指针的类型推断可调用对象的类型，无须显式指定。
 
 ```c++
 find_if(svec.begin(), svec.end(), mem_fn(&string::empty));
@@ -504,7 +513,7 @@ class TextQuery::QueryResult
 
 在嵌套类在其外层类之外完成真正的定义之前，它都是一个不完全类型。
 
-## union：一种节省空间的类（union: A Space-Saving Class）
+## `union`：一种节省空间的类（`union`: A Space-Saving Class）
 
 联合（union）是一种特殊的类。一个联合可以有多个数据成员，但是在任意时刻只有一个数据成员可以有值。给联合的某个成员赋值之后，其他成员会变为未定义状态。分配给联合对象的存储空间至少要能容纳它的最大数据成员。
 
@@ -559,6 +568,7 @@ ival = 42;    // that object now holds the value 42
 C++的早期版本规定，在联合中不能含有定义了构造函数或拷贝控制成员的类类型成员。C++11取消了该限制。但是如果联合的成员类型定义了自己的构造函数或拷贝控制成员，该联合的用法会比只含有内置类型成员的联合复杂得多。
 
 - 当联合只包含内置类型的成员时，可以使用普通的赋值语句改变联合的值。但是如果想将联合的值改为类类型成员对应的值，或者将类类型成员的值改为一个其他值，则必须构造或析构该类类型的成员。
+
 - 当联合只包含内置类型的成员时，编译器会按照成员顺序依次合成默认构造函数或拷贝控制成员。但是如果联合含有类类型成员，并且该类型自定义了默认构造函数或拷贝控制成员，则编译器会为该联合合成对应的版本并将其声明为删除的。
 
 对于联合来说，构造或销毁类类型成员的操作非常复杂。通常情况下，可以把含有类类型成员的联合内嵌在另一个类中，这个类可以管理并控制与联合的类类型成员相关的状态转换。
@@ -668,7 +678,7 @@ File &File::open(File::modes m)
 }
 ```
 
-### volatile限定符（volatile Qualifier）
+### `volatile`限定符（`volatile` Qualifier）
 
 当对象的值可能在程序的控制或检测之外被改变时（如子线程），应该将该对象声明为`volatile`。关键字`volatile`的作用是告知编译器不要优化这样的对象。
 
@@ -715,7 +725,7 @@ public:
 };
 ```
 
-### 链接指示：extern "C"（Linkage Directives：extern "C"）
+### 链接指示：`extern "C"`（Linkage Directives：`extern "C"`）
 
 C++程序有时需要调用使用其他语言编写的函数，最常见的是调用C语言函数。其他语言中的函数名字也必须在C++中进行声明。对于这些函数，编译器检查其调用的方式与处理普通C++函数的方式相同，但是生成的代码有所区别。C++使用链接指示指出任意非C++函数所用的语言。
 

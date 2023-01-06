@@ -20,12 +20,19 @@
 容器选择原则：
 
 - 除非有合适的理由选择其他容器，否则应该使用`vector`。
+
 - 如果程序有很多小的元素，且空间的额外开销很重要，则不要使用`list`或`forward_list`。
+
 - 如果程序要求随机访问容器元素，则应该使用`vector`或`deque`。
+
 - 如果程序需要在容器头尾位置插入/删除元素，但不会在中间位置操作，则应该使用`deque`。
+
 - 如果程序只有在读取输入时才需要在容器中间位置插入元素，之后需要随机访问元素。则：
+
   - 先确定是否真的需要在容器中间位置插入元素。当处理输入数据时，可以先向`vector`追加数据，再调用标准库的`sort`函数重排元素，从而避免在中间位置添加元素。
+
   - 如果必须在中间位置插入元素，可以在输入阶段使用`list`。输入完成后将`list`中的内容拷贝到`vector`中。
+
 - 不确定应该使用哪种容器时，可以先只使用`vector`和`list`的公共操作：使用迭代器，不使用下标操作，避免随机访问。这样在必要时选择`vector`或`list`都很方便。
 
 ## 容器库概览（Container Library Overview）
@@ -43,7 +50,9 @@
 假定`begin`和`end`构成一个合法的迭代器范围，则：
 
 - 如果`begin`等于`end`，则范围为空。
+
 - 如果`begin`不等于`end`，则范围内至少包含一个元素，且`begin`指向该范围内的第一个元素。
+
 - 可以递增`begin`若干次，令`begin`等于`end`。
 
 ```c++
@@ -58,7 +67,7 @@ while (begin != end)
 
 通过类型别名，可以在不了解容器元素类型的情况下使用元素。如果需要元素类型，可以使用容器的`value_type`。如果需要元素类型的引用，可以使用`reference`或`const_reference`。
 
-### begin和end成员（begin and end Members）
+### `begin`和`end`成员（`begin` and `end` Members）
 
 `begin`和`end`操作生成指向容器中第一个元素和尾后地址的迭代器。其常见用途是形成一个包含容器中所有元素的迭代器范围。
 
@@ -118,7 +127,7 @@ array<int>::size_type j;       // error: array<int> is not a type
 
 可以对`array`进行拷贝或赋值操作，但要求二者的元素类型和大小都相同。
 
-### 赋值和swap（Assignment and swap）
+### 赋值和`swap`（Assignment and `swap`）
 
 容器赋值操作：
 
@@ -198,7 +207,9 @@ a2 = {0};   // error: cannot assign to an array from a braced list
 两个容器的比较实际上是元素的逐对比较，其工作方式与`string`的关系运算符类似：
 
 - 如果两个容器大小相同且所有元素对应相等，则这两个容器相等。
+
 - 如果两个容器大小不同，但较小容器中的每个元素都等于较大容器中的对应元素，则较小容器小于较大容器。
+
 - 如果两个容器都不是对方的前缀子序列，则两个容器的比较结果取决于第一个不等元素的比较结果。
 
 ```c++
@@ -312,7 +323,7 @@ elem1 = slist.erase(elem1, elem2);  // after the call elem1 == elem2
 
 `clear`函数删除容器内的所有元素。
 
-### 特殊的forward_list操作（Specialized forward_list Operations）
+### 特殊的`forward_list`操作（Specialized `forward_list` Operations）
 
 在`forward_list`中添加或删除元素的操作是通过改变给定元素之后的元素来完成的。
 
@@ -335,12 +346,19 @@ elem1 = slist.erase(elem1, elem2);  // after the call elem1 == elem2
 向容器中添加或删除元素可能会使指向容器元素的指针、引用或迭代器失效。失效的指针、引用或迭代器不再表示任何元素，使用它们是一种严重的程序设计错误。
 
 - 向容器中添加元素后：
+
   - 如果容器是`vector`或`string`类型，且存储空间被重新分配，则指向容器的迭代器、指针和引用都会失效。如果存储空间未重新分配，指向插入位置之前元素的迭代器、指针和引用仍然有效，但指向插入位置之后元素的迭代器、指针和引用都会失效。
+
   - 如果容器是`deque`类型，添加到除首尾之外的任何位置都会使迭代器、指针和引用失效。如果添加到首尾位置，则迭代器会失效，而指针和引用不会失效。
+
   - 如果容器是`list`或`forward_list`类型，指向容器的迭代器、指针和引用仍然有效。
+
 - 从容器中删除元素后，指向被删除元素的迭代器、指针和引用失效：
+
   - 如果容器是`list`或`forward_list`类型，指向容器其他位置的迭代器、指针和引用仍然有效。
+
   - 如果容器是`deque`类型，删除除首尾之外的任何元素都会使迭代器、指针和引用失效。如果删除尾元素，则尾后迭代器失效，其他迭代器、指针和引用不受影响。如果删除首元素，这些也不会受影响。
+
   - 如果容器是`vector`或`string`类型，指向删除位置之前元素的迭代器、指针和引用仍然有效。但尾后迭代器总会失效。
 
 必须保证在每次改变容器后都正确地重新定位迭代器。
@@ -358,7 +376,7 @@ while (begin != v.end())
 }
 ```
 
-## vector对象是如何增长的（How a vector Grows）
+## `vector`对象是如何增长的（How a `vector` Grows）
 
 `vector`和`string`的实现通常会分配比新空间需求更大的内存空间，容器预留这些空间作为备用，可用来保存更多新元素。
 
@@ -374,9 +392,9 @@ while (begin != v.end())
 
 在C++11中可以使用`shrink_to_fit`函数来要求`deque`、`vector`和`string`退回不需要的内存空间（并不保证退回）。
 
-## 额外的string操作（Additional string Operations）
+## 额外的`string`操作（Additional string Operations）
 
-### 构造string的其他方法（Other Ways to Construct strings）
+### 构造`string`的其他方法（Other Ways to Construct `string`s）
 
 构造`string`的其他方法：
 
@@ -390,7 +408,7 @@ while (begin != v.end())
 
 如果传递给`substr`函数的开始位置超过`string`的大小，则函数会抛出`out_of_range`异常。
 
-### 改变string的其他方法（Other Ways to Change a string）
+### 改变`string`的其他方法（Other Ways to Change a `string`）
 
 修改`string`的操作：
 
@@ -414,7 +432,7 @@ s.insert(11, "5th");    // s == "C++ Primer 5th Ed."
 s2.replace(11, 3, "5th");   // equivalent: s == s2
 ```
 
-### string搜索操作（string Search Operations）
+### `string`搜索操作（`string` Search Operations）
 
 `string`的每个搜索操作都返回一个`string::size_type`值，表示匹配位置的下标。如果搜索失败，则返回一个名为`string::npos`的`static`成员。标准库将`npos`定义为`const string::size_type`类型，并初始化为-1。
 
@@ -424,7 +442,7 @@ s2.replace(11, 3, "5th");   // equivalent: s == s2
 
 ![9-16](Images/9-16.png)
 
-### compare函数（The compare Functions）
+### `compare`函数（The `compare` Functions）
 
 `string`类型提供了一组`compare`函数进行字符串比较操作，类似C标准库的`strcmp`函数。
 
@@ -461,11 +479,11 @@ stack<string, vector<string>> str_stk2(svec);
 
 所有适配器都要求容器具有添加和删除元素的能力，因此适配器不能构造在`array`上。适配器还要求容器具有添加、删除和访问尾元素的能力，因此也不能用`forward_list`构造适配器。
 
-栈适配器`stack`定义在头文件*stack*中，其支持的操作如下：
+栈适配器`stack`定义在头文件`stack`中，其支持的操作如下：
 
 ![9-20](Images/9-20.png)
 
-队列适配器`queue`和`priority_queue`定义在头文件*queue*中，其支持的操作如下：
+队列适配器`queue`和`priority_queue`定义在头文件`queue`中，其支持的操作如下：
 
 ![9-21](Images/9-21.png)
 

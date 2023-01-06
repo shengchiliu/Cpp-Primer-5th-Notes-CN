@@ -168,10 +168,10 @@ BlobPtr<T>& BlobPtr<T>::operator++()
   // forward declarations needed for friend declarations in Blob
   template <typename> class BlobPtr;
   template <typename> class Blob;    // needed for parameters in operator==
-  
+
   template <typename T>
   bool operator==(const Blob<T>&, const Blob<T>&);
-  
+
   template <typename T>
   class Blob
   {
@@ -189,7 +189,7 @@ BlobPtr<T>& BlobPtr<T>::operator++()
   ```c++
   // forward declaration necessary to befriend a specific instantiation of a template
   template <typename T> class Pal;
-  
+
   class C
   { // C is an ordinary, nontemplate class
       friend class Pal<C>;    // Pal instantiated with class C is a friend to C
@@ -197,7 +197,7 @@ BlobPtr<T>& BlobPtr<T>::operator++()
       // no forward declaration required when we befriend all instantiations
       template <typename T> friend class Pal2;
   };
-  
+
   template <typename T>
   class C2
   { // C2 is itself a class template
@@ -236,7 +236,7 @@ class Foo
 {
 public:
     static std::size_t count() { return ctr; }
-    
+
 private:
     static std::size_t ctr;
 };
@@ -332,11 +332,11 @@ public:
     // as with any function template, the type of T is deduced by the compiler
     template <typename T>
     void operator()(T *p) const
-    { 
+    {
         os << "deleting unique_ptr" << std::endl;
         delete p;
     }
-    
+
 private:
     std::ostream &os;
 };
@@ -374,7 +374,7 @@ extern template declaration;    // instantiation declaration
 template declaration;           // instantiation definition
 ```
 
-*declaration*是一个类或函数声明，其中所有模板参数已被替换为模板实参。当编译器遇到`extern`模板声明时，它不会在本文件中生成实例化代码。对于一个给定的实例化版本，可能有多个`extern`声明，但必须只有一个定义。
+`declaration`是一个类或函数声明，其中所有模板参数已被替换为模板实参。当编译器遇到`extern`模板声明时，它不会在本文件中生成实例化代码。对于一个给定的实例化版本，可能有多个`extern`声明，但必须只有一个定义。
 
 ```c++
 // templateBuild.cc
@@ -411,7 +411,9 @@ int i = compare(a1[0], a2[0]);    // instantiation will appear elsewhere
 有3种类型转换可以在调用中应用于函数模板：
 
 - 顶层`const`会被忽略。
+
 - 可以将一个非`const`对象的引用或指针传递给一个`const`引用或指针形参。
+
 - 如果函数形参不是引用类型，则可以对数组或函数类型的实参应用正常的指针转换。数组实参可以转换为指向其首元素的指针。函数实参可以转换为该函数类型的指针。
 
 其他的类型转换，如算术转换、派生类向基类的转换以及用户定义的转换，都不能应用于函数模板。
@@ -505,7 +507,7 @@ auto fcn(It beg, It end) -> decltype(*beg)
 }
 ```
 
-标准库在头文件*type_traits*中定义了类型转换模板，这些模板常用于模板元程序设计。其中每个模板都有一个名为`type`的公有类型成员，表示一个类型。此类型与模板自身的模板类型参数相关。如果不可能（或不必要）转换模板参数，则`type`成员就是模板参数类型本身。
+标准库在头文件`type_traits`中定义了类型转换模板，这些模板常用于模板元程序设计。其中每个模板都有一个名为`type`的公有类型成员，表示一个类型。此类型与模板自身的模板类型参数相关。如果不可能（或不必要）转换模板参数，则`type`成员就是模板参数类型本身。
 
 ![16-1](Images/16-1.png)
 
@@ -544,7 +546,7 @@ func(compare<int>);    // passing compare(const int&, const int&)
 
 ### 模板实参推断和引用（Template Argument Deduction and References）
 
-当一个函数参数是模板类型参数的普通（左值）引用（形如`T&`）时，只能传递给它一个左值（如一个变量或一个返回引用类型的表达式）。*T*被推断为实参所引用的类型，如果实参是`const`的，则*T*也为`const`类型。
+当一个函数参数是模板类型参数的普通（左值）引用（形如`T&`）时，只能传递给它一个左值（如一个变量或一个返回引用类型的表达式）。`T`被推断为实参所引用的类型，如果实参是`const`的，则`T`也为`const`类型。
 
 ```c++
 template <typename T> void f1(T&);    // argument must be an lvalue
@@ -554,7 +556,7 @@ f1(ci);    // ci is a const int; template parameter T is const int
 f1(5);     // error: argument to a & parameter must be an lvalue
 ```
 
-当一个函数参数是模板类型参数的常量引用（形如`const T&`）时，可以传递给它任何类型的实参。函数参数本身是`const`时，*T*的类型推断结果不会是`const`类型。`const`已经是函数参数类型的一部分了，因此不会再是模板参数类型的一部分。
+当一个函数参数是模板类型参数的常量引用（形如`const T&`）时，可以传递给它任何类型的实参。函数参数本身是`const`时，`T`的类型推断结果不会是`const`类型。`const`已经是函数参数类型的一部分了，因此不会再是模板参数类型的一部分。
 
 ```c++
 template <typename T> void f2(const T&);    // can take an rvalue
@@ -565,7 +567,7 @@ f2(ci);    // ci is a const int, but template parameter T is int
 f2(5);     // a const & parameter can be bound to an rvalue; T is int
 ```
 
-当一个函数参数是模板类型参数的右值引用（形如`T&&`）时，如果传递给它一个右值，类型推断过程类似普通左值引用函数参数的推断过程，推断出的*T*类型是该右值实参的类型。
+当一个函数参数是模板类型参数的右值引用（形如`T&&`）时，如果传递给它一个右值，类型推断过程类似普通左值引用函数参数的推断过程，推断出的`T`类型是该右值实参的类型。
 
 ```c++
 template <typename T> void f3(T&&);
@@ -595,6 +597,7 @@ void f3<int&>(int&);       // when T is int&, function parameter collapses to in
 模板参数绑定的两个例外规则导致了两个结果：
 
 - 如果一个函数参数是指向模板类型参数的右值引用，则可以传递给它任意类型的实参。
+
 - 如果将一个左值传递给这样的参数，则函数参数被实例化为一个普通的左值引用。
 
 当代码中涉及的类型可能是普通（非引用）类型，也可能是引用类型时，编写正确的代码就变得异常困难。
@@ -616,7 +619,7 @@ template <typename T> void f(T&&);         // binds to nonconst rvalues
 template <typename T> void f(const T&);    // lvalues and const rvalues
 ```
 
-### 理解std::move（Understanding std::move）
+### 理解`std::move`（Understanding `std::move`）
 
 `std::move`的定义如下：
 
@@ -638,19 +641,27 @@ s2 = std::move(s1);     // ok: but after the assigment s1 has indeterminate valu
 
 - 在`std::move(string("bye!"))`中传递的是右值。
 
-- - 推断出的*T*类型为`string`。
+  - 推断出的`T`类型为`string`。
+
   - `remove_reference`用`string`进行实例化。
+
   - `remove_reference<string>`的`type`成员是`string`。
+
   - `move`的返回类型是`string&&`。
-  - `move`的函数参数*t*的类型为`string&&`。
+
+  - `move`的函数参数`t`的类型为`string&&`。
 
 - 在`std::move(s1)`中传递的是左值。
 
-- - 推断出的*T*类型为`string&`。
+  - 推断出的`T`类型为`string&`。
+
   - `remove_reference`用`string&`进行实例化。
+
   - `remove_reference<string&>`的`type`成员是`string`。
+
   - `move`的返回类型是`string&&`。
-  - `move`的函数参数*t*的类型为`string& &&`，会折叠成`string&`。
+
+  - `move`的函数参数`t`的类型为`string& &&`，会折叠成`string&`。
 
 可以使用`static_cast`显式地将一个左值转换为一个右值引用。
 
@@ -678,7 +689,7 @@ flip1(f, j, 42);    // f called through flip1 leaves j unchanged
                     // void flip1(void(*fcn)(int, int&), int t1, int t2)
 ```
 
-上例中，*j*被传递给`flip1`的参数*t1*，该参数是一个普通（非引用）类型`int`，而非`int&`，因此`flip1(f, j, 42)`调用会被实例化为`void flip1(void(*fcn)(int, int&), int t1, int t2)`。*j*的值被拷贝至*t1*中，`f`中的引用参数被绑定至*t1*，而非*j*，因此*j*不会被修改。
+上例中，`j`被传递给`flip1`的参数`t1`，该参数是一个普通（非引用）类型`int`，而非`int&`，因此`flip1(f, j, 42)`调用会被实例化为`void flip1(void(*fcn)(int, int&), int t1, int t2)`。`j`的值被拷贝至`t1`中，`f`中的引用参数被绑定至`t1`，而非`j`，因此`j`不会被修改。
 
 将函数参数定义为指向模板类型参数的右值引用（形如`T&&`），通过引用折叠，可以保持翻转实参的左值/右值属性。并且引用参数（无论是左值还是右值）可以保持实参的`const`属性，因为在引用类型中的`const`是底层的。
 
@@ -690,7 +701,7 @@ void flip2(F f, T1 &&t1, T2 &&t2)
 }
 ```
 
-对于修改后的版本，若调用`flip2(f, j, 42)`，会传递给参数*t1*一个左值*j*，但此时推断出的*T1*类型为`int&`，*t1*的类型会被折叠为`int&`，从而解决了`flip1`的错误。
+对于修改后的版本，若调用`flip2(f, j, 42)`，会传递给参数`t1`一个左值`j`，但此时推断出的`T1`类型为`int&`，`t1`的类型会被折叠为`int&`，从而解决了`flip1`的错误。
 
 但`flip2`只能用于接受左值引用的函数，不能用于接受右值引用的函数。函数参数与其他变量一样，都是左值表达式。所以即使是指向模板类型的右值引用参数也只能传递给接受左值引用的函数，不能传递给接受右值引用的函数。
 
@@ -701,10 +712,10 @@ void g(int &&i, int& j)
 }
 
 // error: can't initialize int&& from an lvalue
-flip2(g, i, 42);  // flip2 passes an lvalue to g’s rvalue reference parameter
+flip2(g, i, 42);  // flip2 passes an lvalue to g's rvalue reference parameter
 ```
 
-C++11在头文件*utility*中定义了`forward`。与`move`不同，`forward`必须通过显式模板实参调用，返回该显式实参类型的右值引用。即`forward<T>`返回类型`T&&`。
+C++11在头文件`utility`中定义了`forward`。与`move`不同，`forward`必须通过显式模板实参调用，返回该显式实参类型的右值引用。即`forward<T>`返回类型`T&&`。
 
 通常情况下，可以使用`forward`传递定义为指向模板类型参数的右值引用函数参数。通过其返回类型上的引用折叠，`forward`可以保持给定实参的左值/右值属性。
 
@@ -717,8 +728,9 @@ intermediary(Type &&arg)
 }
 ```
 
-- 如果实参是一个右值，则*Type*是一个普通（非引用）类型，`forward<Type>`返回类型`Type&&`。
-- 如果实参是一个左值，则通过引用折叠，*Type*也是一个左值引用类型，`forward<Type>`返回类型`Type&& &`，对返回类型进行引用折叠，得到`Type&`。
+- 如果实参是一个右值，则`Type`是一个普通（非引用）类型，`forward<Type>`返回类型`Type&&`。
+
+- 如果实参是一个左值，则通过引用折叠，`Type`也是一个左值引用类型，`forward<Type>`返回类型`Type&& &`，对返回类型进行引用折叠，得到`Type&`。
 
 使用`forward`编写完善的转发函数。
 
@@ -739,11 +751,17 @@ void flip(F f, T1 &&t1, T2 &&t2)
 如果重载涉及函数模板，则函数匹配规则会受到一些影响：
 
 - 对于一个调用，其候选函数包括所有模板实参推断成功的函数模板实例。
+
 - 候选的函数模板都是可行的，因为模板实参推断会排除任何不可行的模板。
+
 - 和往常一样，可行函数（模板与非模板）按照类型转换（如果需要的话）来排序。但是可以用于函数模板调用的类型转换非常有限。
+
 - 和往常一样，如果恰有一个函数提供比其他任何函数都更好的匹配，则选择此函数。但是如果多个函数都提供相同级别的匹配，则：
+
   - 如果同级别的函数中只有一个是非模板函数，则选择此函数。
+
   - 如果同级别的函数中没有非模板函数，而有多个函数模板，且其中一个模板比其他模板更特例化，则选择此模板。
+
   - 否则该调用有歧义。
 
 通常，如果使用了一个没有声明的函数，代码将无法编译。但对于重载函数模板的函数而言，如果编译器可以从模板实例化出与调用匹配的版本，则缺少的声明就不再重要了。
@@ -769,6 +787,7 @@ string debug_rep(char *p)
 可变参数模板指可以接受可变数量参数的模板函数或模板类。可变数量的参数被称为参数包（parameter pack），分为两种：
 
 - 模板参数包（template parameter pack），表示零个或多个模板参数。
+
 - 函数参数包（function parameter pack），表示零个或多个函数参数。
 
 用一个省略号`…`来指出模板参数或函数参数表示一个包。在一个模板参数列表中，`class…`或`typename…`指出接下来的参数表示零个或多个类型的列表；一个类型名后面跟一个省略号表示零个或多个给定类型的非类型参数列表。在函数参数列表中，如果一个参数的类型是模板参数包，则此参数也是函数参数包。
@@ -837,7 +856,7 @@ ostream& print(ostream &os, const T &t, const Args&... rest)   // expand Args
 }
 ```
 
-- 第一个扩展操作扩展模板参数包，为`print`生成函数参数列表。编译器将模式`const Args&`应用到模板参数包*Args*中的每个元素上。因此该模式的扩展结果是一个以逗号分隔的零个或多个类型的列表，每个类型都形如`const type&`。
+- 第一个扩展操作扩展模板参数包，为`print`生成函数参数列表。编译器将模式`const Args&`应用到模板参数包`Args`中的每个元素上。因此该模式的扩展结果是一个以逗号分隔的零个或多个类型的列表，每个类型都形如`const type&`。
 
   ```c++
   print(cout, i, s, 42);   // two parameters in the pack
@@ -857,7 +876,7 @@ ostream& print(ostream &os, const T &t, const Args&... rest)   // expand Args
 template <typename... Args>
 ostream &errorMsg(ostream &os, const Args&... rest)
 {
-    // print(os, debug_rep(a1), debug_rep(a2), ..., debug_rep(an)
+    // print(os, debug_rep(a1), debug_rep(a2), ..., debug_rep(an))
     return print(os, debug_rep(rest)...);
 }
 

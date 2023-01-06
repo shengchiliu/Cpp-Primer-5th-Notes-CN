@@ -43,13 +43,16 @@ string u = "hi" + s;    // would be an error if + were a member of string
 如何选择将运算符定义为成员函数还是普通函数：
 
 - 赋值`=`、下标`[]`、调用`()`和成员访问箭头`->`运算符必须是成员函数。
+
 - 复合赋值运算符一般是成员函数，但并非必须。
+
 - 改变对象状态或者与给定类型密切相关的运算符，如递增、递减、解引用运算符，通常是成员函数。
+
 - 具有对称性的运算符可能转换任意一端的运算对象，如算术、相等性、关系和位运算符，通常是普通函数。
 
 ## 输入和输出运算符（Input and Output Operators）
 
-### 重载输出运算符<<（Overloading the Output Operator <<）
+### 重载输出运算符`<<`（Overloading the Output Operator `<<`）
 
 通常情况下，输出运算符的第一个形参是`ostream`类型的普通引用，第二个形参是要打印类型的常量引用，返回值是它的`ostream`形参。
 
@@ -66,7 +69,7 @@ ostream &operator<<(ostream &os, const Sales_data &item)
 
 输入输出运算符必须是非成员函数。而由于IO操作通常需要读写类的非公有数据，所以输入输出运算符一般被声明为友元。
 
-### 重载输入运算符>>（Overloading the Input Operator >>）
+### 重载输入运算符`>>`（Overloading the Input Operator `>>`）
 
 通常情况下，输入运算符的第一个形参是要读取的流的普通引用，第二个形参是要读入的目的对象的普通引用，返回值是它的第一个形参。
 
@@ -88,7 +91,9 @@ istream &operator>>(istream &is, Sales_data &item)
 以下情况可能导致读取操作失败：
 
 - 读取了错误类型的数据。
+
 - 读取操作到达文件末尾。
+
 - 遇到输入流的其他错误。
 
 当读取操作发生错误时，输入操作符应该负责从错误状态中恢复。
@@ -132,7 +137,7 @@ Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
           lhs.units_sold == rhs.units_sold &&
           lhs.revenue == rhs.revenue;
   }
-  
+
   bool operator!=(const Sales_data &lhs, const Sales_data &rhs)
   {
       return !(lhs == rhs);
@@ -146,7 +151,9 @@ Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
 关系运算符设计准则：
 
 - 定义顺序关系，令其与关联容器中对关键字的要求保持一致。
+
 - 如果类定义了`operator==`，则关系运算符的定义应该与`operator==`保持一致。特别是，如果两个对象是不相等的，那么其中一个对象应该小于另一个对象。
+
 - 只有存在唯一一种逻辑可靠的小于关系时，才应该考虑为类定义`operator<`。
 
 ## 赋值运算符（Assignment Operators）
@@ -264,10 +271,11 @@ public:
 };
 ```
 
-对于形如`point->mem`的表达式来说，*point*必须是指向类对象的指针或者是一个重载了`operator->`的类的对象。*point*类型不同，`point->mem`的含义也不同。
+对于形如`point->mem`的表达式来说，`point`必须是指向类对象的指针或者是一个重载了`operator->`的类的对象。`point`类型不同，`point->mem`的含义也不同。
 
-- 如果*point*是指针，则调用内置箭头运算符，表达式等价于`(*point).mem`。
-- 如果*point*是重载了`operator->`的类的对象，则使用`point.operator->()`的结果来获取*mem*，表达式等价于`(point.operator->())->mem`。其中，如果该结果是一个指针，则执行内置操作，否则重复调用当前操作。
+- 如果`point`是指针，则调用内置箭头运算符，表达式等价于`(*point).mem`。
+
+- 如果`point`是重载了`operator->`的类的对象，则使用`point.operator->()`的结果来获取`mem`，表达式等价于`(point.operator->())->mem`。其中，如果该结果是一个指针，则执行内置操作，否则重复调用当前操作。
 
 ## 函数调用运算符（Function-Call Operator）
 
@@ -348,7 +356,7 @@ private:
 
 ### 标准库定义的函数对象（Library-Defined Function Objects）
 
-标准库在头文件*functional*中定义了一组表示算术运算符、关系运算符和逻辑运算符的类，每个类分别定义了一个执行命名操作的调用运算符。这些类都被定义为模板的形式，可以为其指定具体的应用类型（即调用运算符的形参类型）。
+标准库在头文件`functional`中定义了一组表示算术运算符、关系运算符和逻辑运算符的类，每个类分别定义了一个执行命名操作的调用运算符。这些类都被定义为模板的形式，可以为其指定具体的应用类型（即调用运算符的形参类型）。
 
 ![14-2](Images/14-2.png)
 
@@ -363,11 +371,11 @@ sort(nameTable.begin(), nameTable.end(),
 sort(nameTable.begin(), nameTable.end(), less<string*>());
 ```
 
-### 可调用对象与function（Callable Objects and function）
+### 可调用对象与`function`（Callable Objects and `function`）
 
 调用形式指明了调用返回的类型以及传递给调用的实参类型。不同的可调用对象可能具有相同的调用形式。
 
-标准库`function`类型是一个模板，定义在头文件*functional*中，用来表示对象的调用形式。
+标准库`function`类型是一个模板，定义在头文件`functional`中，用来表示对象的调用形式。
 
 ![14-3](Images/14-3.png)
 
@@ -388,7 +396,7 @@ struct div
 function<int(int, int)> f1 = add;      // function pointer
 function<int(int, int)> f2 = div();    // object of a function-object class
 function<int(int, int)> f3 = [](int i, int j) { return i * j; };  // lambda
-                                   
+
 cout << f1(4,2) << endl;   // prints 6
 cout << f2(4,2) << endl;   // prints 2
 cout << f3(4,2) << endl;   // prints 8
@@ -420,9 +428,9 @@ public:
     {
         if (i < 0 || i > 255)
             throw std::out_of_range("Bad SmallInt value");
-    }   
+    }
     operator int() const { return val; }
-    
+
 private:
     std::size_t val;
 };
@@ -458,8 +466,11 @@ static_cast<int>(si) + 3;    // ok: explicitly request the conversion
 如果表达式被用作条件，则编译器会隐式地执行显式类型转换。
 
 - `if`、`while`、`do-while`语句的条件部分。
+
 - `for`语句头的条件表达式。
+
 - 条件运算符`? :`的条件表达式。
+
 - 逻辑非运算符`!`、逻辑或运算符`||`、逻辑与运算符`&&`的运算对象。
 
 类类型向`bool`的类型转换通常用在条件部分，因此`operator bool`一般被定义为显式的。
@@ -468,7 +479,7 @@ static_cast<int>(si) + 3;    // ok: explicitly request the conversion
 
 在两种情况下可能产生多重转换路径：
 
-- *A*类定义了一个接受*B*类对象的转换构造函数，同时*B*类定义了一个转换目标是*A*类的类型转换运算符。
+- `A`类定义了一个接受`B`类对象的转换构造函数，同时`B`类定义了一个转换目标是`A`类的类型转换运算符。
 
   ```c++
   // usually a bad idea to have mutual conversions between two class types
@@ -479,13 +490,13 @@ static_cast<int>(si) + 3;    // ok: explicitly request the conversion
       A(const B&); // converts a B to an A
       // other members
   };
-  
+
   struct B
   {
       operator A() const; // also converts a B to an A
       // other members
   };
-  
+
   A f(const A&);
   B b;
   A a = f(b);    // error ambiguous: f(B::operator A())
@@ -503,7 +514,7 @@ static_cast<int>(si) + 3;    // ok: explicitly request the conversion
       operator double() const;    // conversions to arithmetic types
       // other members
   };
-  
+
   void f2(long double);
   A a;
   f2(a);    // error ambiguous: f(A::operator int())
@@ -554,11 +565,11 @@ manip2(10);    // manip2(C(10) or manip2(E(double(10)))
 class SmallInt
 {
     friend SmallInt operator+(const SmallInt&, const SmallInt&);
-    
+
 public:
     SmallInt(int = 0);    // conversion from int
     operator int() const { return val; }    // conversion to int
-    
+
 private:
     std::size_t val;
 };

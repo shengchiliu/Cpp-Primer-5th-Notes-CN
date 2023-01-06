@@ -1,6 +1,6 @@
 # 第3章 字符串、向量和数组
 
-## 命名空间的using声明（Namespace using Declarations）
+## 命名空间的`using`声明（Namespace `using` Declarations）
 
 使用`using`声明后就无须再通过专门的前缀去获取所需的名字了。
 
@@ -12,11 +12,11 @@ using std::cout;
 
 头文件中通常不应该包含`using`声明。
 
-## 标准库类型string（Library string Type）
+## 标准库类型`string`（Library `string` Type）
 
-标准库类型`string`表示可变长的字符序列，定义在头文件*string*中。
+标准库类型`string`表示可变长的字符序列，定义在头文件`string`中。
 
-### 定义和初始化string对象（Defining and Initializing strings）
+### 定义和初始化`string`对象（Defining and Initializing `string`s）
 
 初始化`string`的方式：
 
@@ -24,7 +24,7 @@ using std::cout;
 
 如果使用等号初始化一个变量，实际上执行的是拷贝初始化（copy initialization），编译器把等号右侧的初始值拷贝到新创建的对象中去。如果不使用等号，则执行的是直接初始化（direct initialization）。
 
-### string对象上的操作（Operations on strings）
+### `string`对象上的操作（Operations on `string`s）
 
 `string`的操作：
 
@@ -48,13 +48,13 @@ string s6 = s1 + ", " + "world";    // ok: each + has a string operand
 
 为了与C兼容，C++语言中的字符串字面值并不是标准库`string`的对象。
 
-### 处理string对象中的字符（Dealing with the Characters in a string）
+### 处理`string`对象中的字符（Dealing with the Characters in a `string`）
 
-头文件*cctype*中的字符操作函数：
+头文件`cctype`中的字符操作函数：
 
 ![3-3](Images/3-3.png)
 
-建议使用C++版本的C标准库头文件。C语言中名称为*name.h*的头文件，在C++中则被命名为*cname*。
+建议使用C++版本的C标准库头文件。C语言中名称为`name.h`的头文件，在C++中则被命名为`cname`。
 
 C++11提供了范围`for`（range for）语句，可以遍历给定序列中的每个元素并执行某种操作。
 
@@ -63,7 +63,7 @@ for (declaration : expression)
     statement
 ```
 
-*expression*部分是一个对象，用于表示一个序列。*declaration*部分负责定义一个变量，该变量被用于访问序列中的基础元素。每次迭代，*declaration*部分的变量都会被初始化为*expression*部分的下一个元素值。
+`expression`部分是一个对象，用于表示一个序列。`declaration`部分负责定义一个变量，该变量被用于访问序列中的基础元素。每次迭代，`declaration`部分的变量都会被初始化为`expression`部分的下一个元素值。
 
 ```c++
 string str("some string");
@@ -76,13 +76,13 @@ for (auto c : str)      // for every char in str
 
 下标运算符接收的输入参数是`string::size_type`类型的值，表示要访问字符的位置，返回值是该位置上字符的引用。
 
-下标数值从0记起，范围是0至*size - 1*。使用超出范围的下标将引发不可预知的后果。
+下标数值从0记起，范围是0至`size - 1`。使用超出范围的下标将引发不可预知的后果。
 
 C++标准并不要求标准库检测下标是否合法。编程时可以把下标的类型定义为相应的`size_type`，这是一种无符号数，可以确保下标不会小于0，此时代码只需要保证下标小于`size`的值就可以了。另一种确保下标合法的有效手段就是使用范围`for`语句。
 
-## 标准库类型vector（Library vector Type）
+## 标准库类型`vector`（Library `vector` Type）
 
-标准库类型`vector`表示对象的集合，也叫做容器（container），定义在头文件*vector*中。`vector`中所有对象的类型都相同，每个对象都有一个索引与之对应并用于访问该对象。
+标准库类型`vector`表示对象的集合，也叫做容器（container），定义在头文件`vector`中。`vector`中所有对象的类型都相同，每个对象都有一个索引与之对应并用于访问该对象。
 
 `vector`是模板（template）而非类型，由`vector`生成的类型必须包含`vector`中元素的类型，如`vector<int>`。
 
@@ -90,7 +90,7 @@ C++标准并不要求标准库检测下标是否合法。编程时可以把下�
 
 在早期的C++标准中，如果`vector`的元素还是`vector`，定义时必须在外层`vector`对象的右尖括号和其元素类型之间添加一个空格，如`vector<vector<int> >`。但是在C++11标准中，可以直接写成`vector<vector<int>>`，不需要添加空格。
 
-### 定义和初始化vector对象（Defining and Initializing vectors）
+### 定义和初始化`vector`对象（Defining and Initializing `vector`s）
 
 初始化`vector`对象的方法：
 
@@ -100,7 +100,7 @@ C++标准并不要求标准库检测下标是否合法。编程时可以把下�
 
 可以只提供`vector`对象容纳的元素数量而省略初始值，此时会创建一个值初始化（value-initialized）的元素初值，并把它赋给容器中的所有元素。这个初值由`vector`对象中的元素类型决定。
 
-### 向vector对象中添加元素（Adding Elements to a vector）
+### 向`vector`对象中添加元素（Adding Elements to a `vector`）
 
 `push_back`函数可以把一个值添加到`vector`的尾端。
 
@@ -113,7 +113,7 @@ for (int i = 0; i != 100; ++i)
 
 范围`for`语句体内不应该改变其所遍历序列的大小。
 
-### 其他vector操作（Other vector Operations）
+### 其他`vector`操作（Other `vector` Operations）
 
 `vector`支持的操作：
 
@@ -191,7 +191,7 @@ C++11新增了`cbegin`和`cend`函数，不论`vector`或`string`对象是否为
 
 ### 定义和初始化内置数组（Defining and Initializing Built-in Arrays）
 
-数组是一种复合类型，声明形式为`a[d]`，其中*a*是数组名称，*d*是数组维度（dimension）。维度必须是一个常量表达式。
+数组是一种复合类型，声明形式为`a[d]`，其中`a`是数组名称，`d`是数组维度（dimension）。维度必须是一个常量表达式。
 
 默认情况下，数组的元素被默认初始化。
 
@@ -230,7 +230,7 @@ int (&arrRef)[10] = arr;    // arrRef refers to an array of ten ints
 
 ### 访问数组元素（Accessing the Elements of an Array）
 
-数组下标通常被定义成`size_t`类型，这是一种机器相关的无符号类型，可以表示内存中任意对象的大小。`size_t`定义在头文件*cstddef*中。
+数组下标通常被定义成`size_t`类型，这是一种机器相关的无符号类型，可以表示内存中任意对象的大小。`size_t`定义在头文件`cstddef`中。
 
 大多数常见的安全问题都源于缓冲区溢出错误。当数组或其他类似数据结构的下标越界并试图访问非法内存区域时，就会产生此类错误。
 
@@ -261,7 +261,7 @@ ia3 = p;    // error: can't assign an int* to an array
 ia3[4] = i;     // ok: assigns the value of i to an element in ia3
 ```
 
-C++11在头文件*iterator*中定义了两个名为`begin`和`end`的函数，功能与容器中的两个同名成员函数类似，参数是一个数组。
+C++11在头文件`iterator`中定义了两个名为`begin`和`end`的函数，功能与容器中的两个同名成员函数类似，参数是一个数组。
 
 ```c++
 int ia[] = {0,1,2,3,4,5,6,7,8,9};   // ia is an array of ten ints
@@ -269,7 +269,7 @@ int *beg = begin(ia);   // pointer to the first element in ia
 int *last = end(ia);    // pointer one past the last element in ia
 ```
 
-两个指针相减的结果类型是`ptrdiff_t`，这是一种定义在头文件*cstddef*中的带符号类型。
+两个指针相减的结果类型是`ptrdiff_t`，这是一种定义在头文件`cstddef`中的带符号类型。
 
 标准库类型限定使用的下标必须是无符号类型，而内置的下标运算无此要求。
 
@@ -290,7 +290,9 @@ C风格字符串函数不负责验证其参数的正确性，传入此类函数�
 任何出现字符串字面值的地方都可以用以空字符结束的字符数组来代替：
 
 - 允许使用以空字符结束的字符数组来初始化`string`对象或为`string`对象赋值。
+
 - 在`string`对象的加法运算中，允许使用以空字符结束的字符数组作为其中一个运算对象（不能两个运算对象都是）。
+
 - 在`string`对象的复合赋值运算中，允许使用以空字符结束的字符数组作为右侧运算对象。
 
 不能用`string`对象直接初始化指向字符的指针。为了实现该功能，`string`提供了一个名为`c_str`的成员函数，返回`const char*`类型的指针，指向一个以空字符结束的字符数组，数组的数据和`string`对象一样。
@@ -354,7 +356,7 @@ for (const auto &row : ia)  // for every element in the outer array
         cout << col << endl;
 ```
 
-如果*row*不是引用类型，编译器初始化*row*时会自动将数组形式的元素转换成指向该数组内首元素的指针，这样得到的*row*就是`int*`类型，而之后的内层循环则试图在一个`int*`内遍历，程序将无法通过编译。
+如果`row`不是引用类型，编译器初始化`row`时会自动将数组形式的元素转换成指向该数组内首元素的指针，这样得到的`row`就是`int*`类型，而之后的内层循环则试图在一个`int*`内遍历，程序将无法通过编译。
 
 ```c++
 for (auto row : ia)

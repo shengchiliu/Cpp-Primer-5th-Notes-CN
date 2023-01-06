@@ -3,19 +3,22 @@
 关联容器支持高效的关键字查找和访问操作。2个主要的关联容器（associative-container）类型是`map`和`set`。
 
 - `map`中的元素是一些键值对（key-value）：关键字起索引作用，值表示与索引相关联的数据。
+
 - `set`中每个元素只包含一个关键字，支持高效的关键字查询操作：检查一个给定关键字是否在`set`中。
 
 标准库提供了8个关联容器，它们之间的不同体现在三个方面：
 
 - 是`map`还是`set`类型。
+
 - 是否允许保存重复的关键字。
+
 - 是否按顺序保存元素。
 
 允许重复保存关键字的容器名字都包含单词`multi`；无序保存元素的容器名字都以单词`unordered`开头。
 
 ![11-1](Images/11-1.png)
 
-`map`和`multimap`类型定义在头文件*map*中；`set`和`multiset`类型定义在头文件*set*中；无序容器定义在头文件*unordered_map*和*unordered_set*中。
+`map`和`multimap`类型定义在头文件`map`中；`set`和`multiset`类型定义在头文件`set`中；无序容器定义在头文件`unordered_map`和`unordered_set`中。
 
 ## 使用关联容器（Using an Associative Container）
 
@@ -77,9 +80,9 @@ bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs)
 multiset<Sales_data, decltype(compareIsbn)*> bookstore(compareIsbn);
 ```
 
-### pair类型（The pair Type）
+### `pair`类型（The `pair` Type）
 
-`pair`定义在头文件*utility*中。一个`pair`可以保存两个数据成员，分别命名为`first`和`second`。
+`pair`定义在头文件`utility`中。一个`pair`可以保存两个数据成员，分别命名为`first`和`second`。
 
 ```c++
 pair<string, string> anon;        // holds two strings
@@ -175,6 +178,7 @@ word_count.insert(map<string, size_t>::value_type(word, 1));
 `insert`或`emplace`的返回值依赖于容器类型和参数：
 
 - 对于不包含重复关键字的容器，添加单一元素的`insert`和`emplace`版本返回一个`pair`，表示操作是否成功。`pair`的`first`成员是一个迭代器，指向具有给定关键字的元素；`second`成员是一个`bool`值。如果关键字已在容器中，则`insert`直接返回，`bool`值为`false`。如果关键字不存在，元素会被添加至容器中，`bool`值为`true`。
+
 - 对于允许包含重复关键字的容器，添加单一元素的`insert`和`emplace`版本返回指向新元素的迭代器。
 
 ### 删除元素（Erasing Elements）
@@ -185,7 +189,7 @@ word_count.insert(map<string, size_t>::value_type(word, 1));
 
 与顺序容器不同，关联容器提供了一个额外的`erase`操作。它接受一个`key_type`参数，删除所有匹配给定关键字的元素（如果存在），返回实际删除的元素数量。对于不包含重复关键字的容器，`erase`的返回值总是1或0。若返回值为0，则表示想要删除的元素并不在容器中。
 
-### map的下标操作（Subscripting a map）
+### `map`的下标操作（Subscripting a `map`）
 
 `map`下标运算符接受一个关键字，获取与此关键字相关联的值。如果关键字不在容器中，下标运算符会向容器中添加该关键字，并值初始化关联值。
 
