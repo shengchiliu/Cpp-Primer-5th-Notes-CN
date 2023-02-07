@@ -1,6 +1,6 @@
 # 第3章 字符串、向量和数组
 
-## 命名空间的using声明（Namespace using Declarations）
+## 命名空间的`using`声明（Namespace `using` Declarations）
 
 使用`using`声明后就无须再通过专门的前缀去获取所需的名字了。
 
@@ -12,11 +12,11 @@ using std::cout;
 
 头文件中通常不应该包含`using`声明。
 
-## 标准库类型string（Library string Type）
+## 标准库类型`string`（Library `string` Type）
 
 标准库类型`string`表示可变长的字符序列，定义在头文件`string`中。
 
-### 定义和初始化string对象（Defining and Initializing strings）
+### 定义和初始化`string`对象（Defining and Initializing `string`s）
 
 初始化`string`的方式：
 
@@ -24,7 +24,7 @@ using std::cout;
 
 如果使用等号初始化一个变量，实际上执行的是拷贝初始化（copy initialization），编译器把等号右侧的初始值拷贝到新创建的对象中去。如果不使用等号，则执行的是直接初始化（direct initialization）。
 
-### string对象上的操作（Operations on strings）
+### `string`对象上的操作（Operations on `string`s）
 
 `string`的操作：
 
@@ -48,7 +48,7 @@ string s6 = s1 + ", " + "world";    // ok: each + has a string operand
 
 为了与C兼容，C++语言中的字符串字面值并不是标准库`string`的对象。
 
-### 处理string对象中的字符（Dealing with the Characters in a string）
+### 处理`string`对象中的字符（Dealing with the Characters in a `string`）
 
 头文件`cctype`中的字符操作函数：
 
@@ -80,7 +80,7 @@ for (auto c : str)      // for every char in str
 
 C++标准并不要求标准库检测下标是否合法。编程时可以把下标的类型定义为相应的`size_type`，这是一种无符号数，可以确保下标不会小于0，此时代码只需要保证下标小于`size`的值就可以了。另一种确保下标合法的有效手段就是使用范围`for`语句。
 
-## 标准库类型vector（Library vector Type）
+## 标准库类型`vector`（Library `vector` Type）
 
 标准库类型`vector`表示对象的集合，也叫做容器（container），定义在头文件`vector`中。`vector`中所有对象的类型都相同，每个对象都有一个索引与之对应并用于访问该对象。
 
@@ -90,7 +90,7 @@ C++标准并不要求标准库检测下标是否合法。编程时可以把下�
 
 在早期的C++标准中，如果`vector`的元素还是`vector`，定义时必须在外层`vector`对象的右尖括号和其元素类型之间添加一个空格，如`vector<vector<int> >`。但是在C++11标准中，可以直接写成`vector<vector<int>>`，不需要添加空格。
 
-### 定义和初始化vector对象（Defining and Initializing vectors）
+### 定义和初始化`vector`对象（Defining and Initializing `vector`s）
 
 初始化`vector`对象的方法：
 
@@ -100,7 +100,7 @@ C++标准并不要求标准库检测下标是否合法。编程时可以把下�
 
 可以只提供`vector`对象容纳的元素数量而省略初始值，此时会创建一个值初始化（value-initialized）的元素初值，并把它赋给容器中的所有元素。这个初值由`vector`对象中的元素类型决定。
 
-### 向vector对象中添加元素（Adding Elements to a vector）
+### 向`vector`对象中添加元素（Adding Elements to a `vector`）
 
 `push_back`函数可以把一个值添加到`vector`的尾端。
 
@@ -113,7 +113,7 @@ for (int i = 0; i != 100; ++i)
 
 范围`for`语句体内不应该改变其所遍历序列的大小。
 
-### 其他vector操作（Other vector Operations）
+### 其他`vector`操作（Other `vector` Operations）
 
 `vector`支持的操作：
 

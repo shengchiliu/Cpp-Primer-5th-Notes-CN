@@ -619,7 +619,7 @@ template <typename T> void f(T&&);         // binds to nonconst rvalues
 template <typename T> void f(const T&);    // lvalues and const rvalues
 ```
 
-### 理解std::move（Understanding std::move）
+### 理解`std::move`（Understanding `std::move`）
 
 `std::move`的定义如下：
 

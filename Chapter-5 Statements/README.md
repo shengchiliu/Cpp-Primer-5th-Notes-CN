@@ -38,7 +38,7 @@ i = 0;  // error: i is not accessible outside the loop
 
 ## 条件语句（Conditional Statements）
 
-### if语句（The if Statement）
+### `if`语句（The `if` Statement）
 
 `if`语句的形式：
 
@@ -64,7 +64,7 @@ else
 
 `if`语句可以嵌套，其中`else`与离它最近的尚未匹配的`if`相匹配。
 
-### switch语句（The switch Statement）
+### `switch`语句（The `switch` Statement）
 
 `switch`语句的形式：
 
@@ -95,7 +95,7 @@ case true:
 
 迭代语句通常称为循环，它重复执行操作直到满足某个条件才停止。`while`和`for`语句在执行循环体之前检查条件，`do-while`语句先执行循环体再检查条件。
 
-### while语句（The while Statement）
+### `while`语句（The `while` Statement）
 
 `while`语句的形式：
 
@@ -110,7 +110,7 @@ while (condition)
 
 在不确定迭代次数，或者想在循环结束后访问循环控制变量时，使用`while`比较合适。
 
-### 传统的for语句（Traditional for Statement）
+### 传统的`for`语句（Traditional `for` Statement）
 
 `for`语句的形式：
 
@@ -123,7 +123,7 @@ for (initializer; condition; expression)
 
 `for`语句头中定义的对象只在`for`循环体内可见。
 
-### 范围for语句（Range for Statement）
+### 范围`for`语句（Range `for` Statement）
 
 范围`for`语句的形式：
 
@@ -134,7 +134,7 @@ for (declaration : expression)
 
 其中`expression`表示一个序列，拥有能返回迭代器的`begin`和`end`成员。`declaration`定义一个变量，序列中的每个元素都应该能转换成该变量的类型（可以使用`auto`）。如果需要对序列中的元素执行写操作，循环变量必须声明成引用类型。每次迭代都会重新定义循环控制变量，并将其初始化为序列中的下一个值，之后才会执行`statement`。
 
-### do-while语句（The do-while Statement）
+### `do-while`语句（The `do-while` Statement）
 
 `do-while`语句的形式：
 
@@ -152,7 +152,7 @@ while (condition);
 
 跳转语句中断当前的执行过程。
 
-### break语句（The break Statement）
+### `break`语句（The `break` Statement）
 
 `break`语句只能出现在迭代语句或者`switch`语句的内部，负责终止离它最近的`while`、`do-while`、`for`或者`switch`语句，并从这些语句之后的第一条语句开始执行。
 
@@ -180,7 +180,7 @@ while (cin >> buf && !buf.empty())
 } // end while
 ```
 
-### continue语句（The continue Statement）
+### `continue`语句（The `continue` Statement）
 
 `continue`语句只能出现在迭代语句的内部，负责终止离它最近的循环的当前一次迭代并立即开始下一次迭代。和`break`语句不同的是，只有当`switch`语句嵌套在迭代语句内部时，才能在`switch`中使用`continue`。
 
@@ -192,7 +192,7 @@ while (cin >> buf && !buf.empty())
 
 - 对于范围`for`语句来说，是用序列中的下一个元素初始化循环变量。
 
-### goto语句（The goto Statement）
+### `goto`语句（The `goto` Statement）
 
 `goto`语句（labeled statement）是一种特殊的语句，在它之前有一个标识符和一个冒号。
 
@@ -212,7 +212,7 @@ goto label;
 
 建议不要在程序中使用`goto`语句，它使得程序既难理解又难修改。
 
-## try语句块和异常处理（try Blocks and Exception Handling）
+## `try`语句块和异常处理（`try` Blocks and Exception Handling）
 
 异常（exception）是指程序运行时的反常行为，这些行为超出了函数正常功能的范围。当程序的某一部分检测到一个它无法处理的问题时，需要使用异常处理（exception handling）。
 
@@ -224,11 +224,11 @@ goto label;
 
 - 异常类用于在`throw`表达式和相关的`catch`子句之间传递异常的具体信息。
 
-### throw表达式（A throw Expression）
+### `throw`表达式（A `throw` Expression）
 
 `throw`表达式包含关键字`throw`和紧随其后的一个表达式，其中表达式的类型就是抛出的异常类型。
 
-### try语句块（The try Block）
+### `try`语句块（The `try` Block）
 
 `try`语句块的通用形式：
 

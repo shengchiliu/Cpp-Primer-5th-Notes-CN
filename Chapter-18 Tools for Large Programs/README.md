@@ -107,7 +107,7 @@ catch (...)
 
 如果`catch(…)`与其他`catch`语句一起使用，则`catch(…)`必须位于最后，否则`catch(…)`后面的`catch`语句永远不会被匹配。
 
-### 函数try语句块与构造函数（Function try Blocks and Constructors）
+### 函数`try`语句块与构造函数（Function `try` Blocks and Constructors）
 
 要想处理构造函数初始值列表抛出的异常，必须将构造函数写成函数`try`语句块（function try block）的形式。函数`try`语句块使得一组`catch`语句可以同时处理构造函数体和构造函数初始化过程中的异常。
 
@@ -128,7 +128,7 @@ catch(const std::bad_alloc &e)
 
 在初始化构造函数参数时发生的异常不属于函数`try`语句块处理的范围。
 
-### noexcept异常说明（The noexcept Exception Specification）
+### `noexcept`异常说明（The `noexcept` Exception Specification）
 
 在C++11中，可以通过提供`noexcept`说明（noexcept specification）来指出某个函数不会抛出异常。
 

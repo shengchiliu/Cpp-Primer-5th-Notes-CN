@@ -4,11 +4,11 @@
 
 ## 定义抽象数据类型（Defining Abstract Data Types）
 
-### 设计Sales_data类（Designing the Sales_data Class）
+### 设计`Sales_data`类（Designing the `Sales_data` Class）
 
 类的用户是程序员，而非应用程序的最终使用者。
 
-### 定义改进的Sales_data类（Defining the Revised Sales_data Class）
+### 定义改进的`Sales_data`类（Defining the Revised `Sales_data` Class）
 
 成员函数（member function）的声明必须在类的内部，定义则既可以在类的内部也可以在类的外部。定义在类内部的函数是隐式的内联函数。
 
@@ -291,7 +291,7 @@ void Screen::some_member() const
 
 提供类内初始值时，必须使用`=`或花括号形式。
 
-### 返回\*this的成员函数（Functions That Return \*this）
+### 返回`*this`的成员函数（Functions That Return `*this`）
 
 `const`成员函数如果以引用形式返回`*this`，则返回类型是常量引用。
 

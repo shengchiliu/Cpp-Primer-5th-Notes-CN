@@ -52,7 +52,7 @@ string u = "hi" + s;    // would be an error if + were a member of string
 
 ## 输入和输出运算符（Input and Output Operators）
 
-### 重载输出运算符<<（Overloading the Output Operator <<）
+### 重载输出运算符`<<`（Overloading the Output Operator `<<`）
 
 通常情况下，输出运算符的第一个形参是`ostream`类型的普通引用，第二个形参是要打印类型的常量引用，返回值是它的`ostream`形参。
 
@@ -69,7 +69,7 @@ ostream &operator<<(ostream &os, const Sales_data &item)
 
 输入输出运算符必须是非成员函数。而由于IO操作通常需要读写类的非公有数据，所以输入输出运算符一般被声明为友元。
 
-### 重载输入运算符>>（Overloading the Input Operator >>）
+### 重载输入运算符`>>`（Overloading the Input Operator `>>`）
 
 通常情况下，输入运算符的第一个形参是要读取的流的普通引用，第二个形参是要读入的目的对象的普通引用，返回值是它的第一个形参。
 
@@ -371,7 +371,7 @@ sort(nameTable.begin(), nameTable.end(),
 sort(nameTable.begin(), nameTable.end(), less<string*>());
 ```
 
-### 可调用对象与function（Callable Objects and function）
+### 可调用对象与`function`（Callable Objects and `function`）
 
 调用形式指明了调用返回的类型以及传递给调用的实参类型。不同的可调用对象可能具有相同的调用形式。
 

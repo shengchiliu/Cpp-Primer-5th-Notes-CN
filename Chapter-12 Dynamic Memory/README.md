@@ -8,7 +8,7 @@ C++中的动态内存管理通过一对运算符完成：`new`在动态内存中
 
 新标准库提供了两种智能指针（smart pointer）类型来管理动态对象。智能指针的行为类似常规指针，但它自动释放所指向的对象。这两种智能指针的区别在于管理底层指针的方式：`shared_ptr`允许多个指针指向同一个对象；`unique_ptr`独占所指向的对象。标准库还定义了一个名为`weak_ptr`的伴随类，它是一种弱引用，指向`shared_ptr`所管理的对象。这三种类型都定义在头文件`memory`中。
 
-### shared_ptr类（The shared_ptr Class）
+### `shared_ptr`类（The `shared_ptr` Class）
 
 智能指针是模板，创建时需要指明指针可以指向的类型。默认初始化的智能指针中保存着一个空指针。
 
@@ -114,7 +114,7 @@ int *p2 = new (nothrow) int;  // if allocation fails, new returns a null pointer
 
 `delete`一个指针后，指针值就无效了（空悬指针，dangling pointer）。为了防止后续的错误访问，应该在`delete`之后将指针值置空。
 
-### shared_ptr和new结合使用（Using shared_ptrs with new）
+### `shared_ptr`和`new`结合使用（Using `shared_ptr`s with `new`）
 
 可以用`new`返回的指针初始化智能指针。该构造函数是`explicit`的，因此必须使用直接初始化形式。
 
@@ -220,7 +220,7 @@ void f(destination &d /* other parameters */)
 
 - 使用`shared_ptr`管理并非`new`分配的资源时，应该传递删除函数。
 
-### unique_ptr（unique_ptr）
+### `unique_ptr`（`unique_ptr`）
 
 与`shared_ptr`不同，同一时刻只能有一个`unique_ptr`指向给定的对象。当`unique_ptr`被销毁时，它指向的对象也会被销毁。
 
@@ -287,7 +287,7 @@ void f(destination &d /* other needed parameters */)
 }
 ```
 
-### weak_ptr（weak_ptr）
+### `weak_ptr`（`weak_ptr`）
 
 `weak_ptr`是一种不控制所指向对象生存期的智能指针，它指向一个由`shared_ptr`管理的对象。将`weak_ptr`绑定到`shared_ptr`不会改变`shared_ptr`的引用计数。如果`shared_ptr`被销毁，即使有`weak_ptr`指向对象，对象仍然有可能被释放。
 
@@ -314,7 +314,7 @@ if (shared_ptr<int> np = wp.lock())
 
 使用`allocator`类可以将内存分配和初始化过程分离，这通常会提供更好的性能和更灵活的内存管理能力。
 
-### new和数组（new and Arrays）
+### `new`和数组（`new` and Arrays）
 
 使用`new`分配对象数组时需要在类型名之后跟一对方括号，在其中指明要分配的对象数量（必须是整型，但不必是常量）。`new`返回指向第一个对象的指针（元素类型）。
 
@@ -380,7 +380,7 @@ for (size_t i = 0; i != 10; ++i)
     *(sp.get() + i) = i;    // use get to get a built-in pointer
 ```
 
-### allocator类（The allocator Class）
+### `allocator`类（The `allocator` Class）
 
 `allocator`类是一个模板，定义时必须指定其可以分配的对象类型。
 

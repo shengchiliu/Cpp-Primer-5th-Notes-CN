@@ -125,7 +125,7 @@ void reset(int &i)  // i is just another name for the object passed to reset
 
 一个函数只能返回一个值，但利用引用形参可以使函数返回额外信息。
 
-### const形参和实参（const Parameters and Arguments）
+### `const`形参和实参（`const` Parameters and Arguments）
 
 当形参有顶层`const`时，传递给它常量对象或非常量对象都是可以的。
 
@@ -161,7 +161,7 @@ f(int &arr[10])     // error: declares arr as an array of references
 f(int (&arr)[10])   // ok: arr is a reference to an array of ten ints
 ```
 
-### main：处理命令行选项（main：Handling Command-Line Options）
+### `main`：处理命令行选项（`main`：Handling Command-Line Options）
 
 可以在命令行中向`main`函数传递参数，形式如下：
 
@@ -222,7 +222,7 @@ else
 
 省略符形参应该仅仅用于C和C++通用的类型，大多数类类型的对象在传递给省略符形参时都无法正确拷贝。
 
-## 返回类型和return语句（Return Types and the return Statement）
+## 返回类型和`return`语句（Return Types and the `return` Statement）
 
 `return`语句有两种形式，作用是终止当前正在执行的函数并返回到调用该函数的地方。
 

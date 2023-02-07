@@ -312,7 +312,7 @@ r = &i;         // r refers to a pointer; assigning &i to r makes p point to i
 
 面对一条比较复杂的指针或引用的声明语句时，从右向左阅读有助于弄清它的真实含义。
 
-## const限定符（Const Qualifier）
+## `const`限定符（`const` Qualifier）
 
 在变量类型前添加关键字`const`可以创建值不能被改变的对象。`const`变量必须被初始化。
 
@@ -336,7 +336,7 @@ bufSize = 512;      // error: attempt to write to const object
   extern const int bufSize;   // same bufSize as defined in file_1.cc
   ```
 
-### const的引用（References to const）
+### `const`的引用（References to `const`）
 
 把引用绑定在`const`对象上即为对常量的引用（reference to const）。对常量的引用不能被用作修改它所绑定的对象。
 
@@ -366,7 +366,7 @@ int &r2 = ci;   // error: non const reference to a const object
   const int &ri = dval;
   ```
 
-### 指针和const（Pointers and const）
+### 指针和`const`（Pointers and `const`）
 
 指向常量的指针（pointer to const）不能用于修改其所指向的对象。常量对象的地址只能使用指向常量的指针来存放，但是指向常量的指针可以指向一个非常量对象。
 
@@ -390,7 +390,7 @@ const double *const pip = &pi;  // pip is a const pointer to a const object
 
 指针本身是常量并不代表不能通过指针修改其所指向的对象的值，能否这样做完全依赖于其指向对象的类型。
 
-### 顶层const（Top-Level const）
+### 顶层`const`（Top-Level `const`）
 
 顶层`const`表示指针本身是个常量，底层`const`（low-level const）表示指针所指的对象是一个常量。指针类型既可以是顶层`const`也可以是底层`const`。
 
@@ -422,7 +422,7 @@ const int &r = ci;      // const in reference types is always low-level
   const int &r2 = i;  // ok: can bind const int& to plain int
   ```
 
-### constexpr和常量表达式（constexpr and Constant Expressions）
+### `constexpr`和常量表达式（`constexpr` and Constant Expressions）
 
 常量表达式（constant expressions）指值不会改变并且在编译过程就能得到计算结果的表达式。
 
@@ -476,7 +476,7 @@ C++11使用关键字`using`进行别名声明（alias declaration），作用是
 using SI = Sales_item; // SI is a synonym for Sales_item
 ```
 
-### auto类型说明符（The auto Type Specifier）
+### `auto`类型说明符（The `auto` Type Specifier）
 
 C++11新增`auto`类型说明符，能让编译器自动分析表达式所属的类型。`auto`定义的变量必须有初始值。
 
@@ -519,7 +519,7 @@ auto &h = 42;   // error: we can't bind a plain reference to a literal
 const auto &j = 42;     // ok: we can bind a const reference to a literal
 ```
 
-### decltype类型指示符（The decltype Type Specifier）
+### `decltype`类型指示符（The `decltype` Type Specifier）
 
 C++11新增`decltype`类型指示符，作用是选择并返回操作数的数据类型，此过程中编译器不实际计算表达式的值。
 

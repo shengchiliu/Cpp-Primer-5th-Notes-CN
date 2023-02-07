@@ -315,7 +315,7 @@ copy(lst.cbegin(), lst.cend(), front_inserter(lst2));
 copy(lst.cbegin(), lst.cend(), inserter(lst3, lst3.begin()));
 ```
 
-### iostream迭代器（iostream Iterators）
+### `iostream`迭代器（`iostream` Iterators）
 
 `istream_iterator`从输入流读取数据，`ostream_iterator`向输出流写入数据。这些迭代器将流当作特定类型的元素序列处理。
 
@@ -404,7 +404,7 @@ cout << string(rcomma.base(), line.cend()) << endl;
 
 ![10-8](Images/10-8.png)
 
-### 5类迭代器（The Five Iterator Categories）
+### 五类迭代器（The Five Iterator Categories）
 
 C++标准指定了泛型和数值算法的每个迭代器参数的最小类别。对于迭代器实参来说，其能力必须大于或等于规定的最小类别。向算法传递更低级的迭代器参数会产生错误（大部分编译器不会提示错误）。
 

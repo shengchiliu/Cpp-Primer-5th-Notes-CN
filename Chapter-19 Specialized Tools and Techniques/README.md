@@ -2,7 +2,7 @@
 
 ## 控制内存分配（Controlling Memory Allocation）
 
-### 重载new和delete（Overloading new and delete）
+### 重载`new`和`delete`（Overloading `new` and `delete`）
 
 使用`new`表达式时，实际执行了三步操作：
 
@@ -72,7 +72,7 @@ void operator delete(void *mem) noexcept
 }
 ```
 
-### 定位new表达式（Placement new Expressions）
+### 定位`new`表达式（Placement `new` Expressions）
 
 在C++的早期版本中，`allocator`类还不是标准库的一部分。如果程序想分开内存分配和初始化过程，需要直接调用`operator new`和`operator delete`函数。它们类似`allocator`类的`allocate`和`deallocate`成员，负责分配或释放内存空间，但不会构造或销毁对象。
 
@@ -103,7 +103,7 @@ new (place_address) type [size] { braced initializer list }
 
 RTTI运算符适用于以下情况：想通过基类对象的指针或引用执行某个派生类操作，并且该操作不是虚函数。
 
-### dynamic_cast运算符（The dynamic_cast Operator）
+### `dynamic_cast`运算符（The `dynamic_cast` Operator）
 
 `dynamic_cast`运算符的形式如下：
 
@@ -157,7 +157,7 @@ dynamic_cast<type&&>(e)
 
 可以对一个空指针执行`dynamic_cast`，结果是所需类型的空指针。
 
-### typeid运算符（The typeid Operator）
+### `typeid`运算符（The `typeid` Operator）
 
 `typeid`表达式的形式是`typeid(e)`，其中`e`可以是任意表达式或类型名称。`typeid`的结果是一个指向常量对象的引用，该对象的类型是标准库`type_info`（定义在头文件`typeinfo`中）或`type_info`的公有派生类型。
 
@@ -247,7 +247,7 @@ bool Base::equal(const Base &rhs) const
 }
 ```
 
-### type_info类（The type_info Class）
+### `type_info`类（The `type_info` Class）
 
 `type_info`类的精确定义会根据编译器的不同而略有差异。但是C++规定`type_info`必须定义在头文件`typeinfo`中，并且至少提供以下操作：
 
@@ -513,7 +513,7 @@ class TextQuery::QueryResult
 
 在嵌套类在其外层类之外完成真正的定义之前，它都是一个不完全类型。
 
-## union：一种节省空间的类（union: A Space-Saving Class）
+## `union`：一种节省空间的类（`union`: A Space-Saving Class）
 
 联合（union）是一种特殊的类。一个联合可以有多个数据成员，但是在任意时刻只有一个数据成员可以有值。给联合的某个成员赋值之后，其他成员会变为未定义状态。分配给联合对象的存储空间至少要能容纳它的最大数据成员。
 
@@ -678,7 +678,7 @@ File &File::open(File::modes m)
 }
 ```
 
-### volatile限定符（volatile Qualifier）
+### `volatile`限定符（`volatile` Qualifier）
 
 当对象的值可能在程序的控制或检测之外被改变时（如子线程），应该将该对象声明为`volatile`。关键字`volatile`的作用是告知编译器不要优化这样的对象。
 
@@ -725,7 +725,7 @@ public:
 };
 ```
 
-### 链接指示：extern "C"（Linkage Directives：extern "C"）
+### 链接指示：`extern "C"`（Linkage Directives：`extern "C"`）
 
 C++程序有时需要调用使用其他语言编写的函数，最常见的是调用C语言函数。其他语言中的函数名字也必须在C++中进行声明。对于这些函数，编译器检查其调用的方式与处理普通C++函数的方式相同，但是生成的代码有所区别。C++使用链接指示指出任意非C++函数所用的语言。
 

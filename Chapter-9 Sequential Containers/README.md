@@ -67,7 +67,7 @@ while (begin != end)
 
 通过类型别名，可以在不了解容器元素类型的情况下使用元素。如果需要元素类型，可以使用容器的`value_type`。如果需要元素类型的引用，可以使用`reference`或`const_reference`。
 
-### begin和end成员（begin and end Members）
+### `begin`和`end`成员（`begin` and `end` Members）
 
 `begin`和`end`操作生成指向容器中第一个元素和尾后地址的迭代器。其常见用途是形成一个包含容器中所有元素的迭代器范围。
 
@@ -127,7 +127,7 @@ array<int>::size_type j;       // error: array<int> is not a type
 
 可以对`array`进行拷贝或赋值操作，但要求二者的元素类型和大小都相同。
 
-### 赋值和swap（Assignment and swap）
+### 赋值和`swap`（Assignment and `swap`）
 
 容器赋值操作：
 
@@ -323,7 +323,7 @@ elem1 = slist.erase(elem1, elem2);  // after the call elem1 == elem2
 
 `clear`函数删除容器内的所有元素。
 
-### 特殊的forward_list操作（Specialized forward_list Operations）
+### 特殊的`forward_list`操作（Specialized `forward_list` Operations）
 
 在`forward_list`中添加或删除元素的操作是通过改变给定元素之后的元素来完成的。
 
@@ -376,7 +376,7 @@ while (begin != v.end())
 }
 ```
 
-## vector对象是如何增长的（How a vector Grows）
+## `vector`对象是如何增长的（How a `vector` Grows）
 
 `vector`和`string`的实现通常会分配比新空间需求更大的内存空间，容器预留这些空间作为备用，可用来保存更多新元素。
 
@@ -392,9 +392,9 @@ while (begin != v.end())
 
 在C++11中可以使用`shrink_to_fit`函数来要求`deque`、`vector`和`string`退回不需要的内存空间（并不保证退回）。
 
-## 额外的string操作（Additional string Operations）
+## 额外的`string`操作（Additional string Operations）
 
-### 构造string的其他方法（Other Ways to Construct strings）
+### 构造`string`的其他方法（Other Ways to Construct `string`s）
 
 构造`string`的其他方法：
 
@@ -408,7 +408,7 @@ while (begin != v.end())
 
 如果传递给`substr`函数的开始位置超过`string`的大小，则函数会抛出`out_of_range`异常。
 
-### 改变string的其他方法（Other Ways to Change a string）
+### 改变`string`的其他方法（Other Ways to Change a `string`）
 
 修改`string`的操作：
 
@@ -432,7 +432,7 @@ s.insert(11, "5th");    // s == "C++ Primer 5th Ed."
 s2.replace(11, 3, "5th");   // equivalent: s == s2
 ```
 
-### string搜索操作（string Search Operations）
+### `string`搜索操作（`string` Search Operations）
 
 `string`的每个搜索操作都返回一个`string::size_type`值，表示匹配位置的下标。如果搜索失败，则返回一个名为`string::npos`的`static`成员。标准库将`npos`定义为`const string::size_type`类型，并初始化为-1。
 
@@ -442,7 +442,7 @@ s2.replace(11, 3, "5th");   // equivalent: s == s2
 
 ![9-16](Images/9-16.png)
 
-### compare函数（The compare Functions）
+### `compare`函数（The `compare` Functions）
 
 `string`类型提供了一组`compare`函数进行字符串比较操作，类似C标准库的`strcmp`函数。
 

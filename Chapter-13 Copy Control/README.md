@@ -154,7 +154,7 @@ public:
 
 需要拷贝操作的类一般也需要赋值操作，反之亦然。
 
-### 使用=default（Using =default）
+### 使用`=default`（Using `=default`）
 
 可以通过将拷贝控制成员定义为`=default`来显式地要求编译器生成合成版本。
 
